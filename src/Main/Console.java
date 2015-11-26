@@ -8,9 +8,9 @@ public class Console {
 	System.out.println("SEP 01 test v1...");
 	System.out.println("Date class test...\n");
 	
-	Date d = new Date(26,11,2015);
-	Date c = new Date(27,11,2015);
-	Date v = new Date(26,11,2015);
+	Date d = new Date(31,12,2015);
+	Date c = new Date(1,3,2015);
+	Date v = new Date(1,2,2015);
 	
 	System.out.println("<---Syso test--->");
 	System.out.println(d.toString());
@@ -20,5 +20,11 @@ public class Console {
 	System.out.println(d.equals(c));
 	System.out.println(d.equals(d));
 	System.out.println(d.equals(v));
+	
+	System.out.println("\n<---toDays test--->");
+	System.out.println(d.toDays());
+	
+	System.out.println("\n<---Diff test--->");
+	System.out.println(v.diff(c));
 	}
 }
