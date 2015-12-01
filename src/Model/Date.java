@@ -1,5 +1,12 @@
 package Model;
 
+/**
+ * Date class
+ * <p>
+ * This class is used to store all the dates in the project
+ * uses Integer variables to store the day, month year separately.
+ * */
+
 public class Date {
 	
 	private int day;
@@ -24,10 +31,18 @@ public class Date {
 			}
 	}
 	public Date(String s){
-		String [] data = s.split(".");
-		this.day = Integer.parseInt(data[0]);
-		this.month = Integer.parseInt(data[1]);
-		this.year = Integer.parseInt(data[2]);
+		String [] split = s.split("/");
+		this.day = Integer.parseInt(split[0]);
+		this.month = Integer.parseInt(split[1]);
+		this.year = Integer.parseInt(split[2]);
+		if(this.year%4==0){
+			this.isleap = true;
+			months = new int[]{31,29,31,30,31,30,31,31,30,31,30,31};
+		}
+		else{
+			this.isleap = false;
+			months = new int[]{31,28,31,30,31,30,31,31,30,31,30,31};
+			}
 	}
 	
 	//Setters and Getters
@@ -49,16 +64,25 @@ public class Date {
 	public void setYear(int year) {
 		this.year = year;
 	}
-
-	//self-explanatory 
-	public String toString(){
-		return day+"."+month+"."+year;
+	public boolean isIsleap() {
+		return isleap;
+	}
+	public void setIsleap(boolean isleap) {
+		this.isleap = isleap;
 	}
 	
+	//self-explanatory 
+	public String toString(){
+		return day+"/"+month+"/"+year;
+	}
+	
+	//Equals or not
 	public boolean equals(Date d){
 		return (this.day==d.getDay()&&this.month==d.getMonth()&&this.year==d.getYear());
 	}
-
+	
+	/**
+	 * @return Returns how many days passed in a year*/
 	public int toDays(){
 		int toDay = 0, sumMonth = 0;
 		toDay += this.day;
@@ -69,6 +93,8 @@ public class Date {
 		return toDay;
 	}
 	
+	/**
+	 * @return Returns the difference from the other date object in days*/
 	public int diff(Date d){
 		return d.toDays()-this.toDays();
 	}

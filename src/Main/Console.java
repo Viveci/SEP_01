@@ -10,11 +10,12 @@ public class Console {
 	
 	Date d = new Date(31,12,2015);
 	Date c = new Date(1,3,2015);
-	Date v = new Date(1,2,2015);
+	Date v = new Date(1,3,2015);
+	Date s = new Date("1/1/2015");
 	
 	System.out.println("<---Syso test--->");
+	System.out.println(s.toString());
 	System.out.println(d.toString());
-	System.out.println(c.toString());
 	
 	System.out.println("\n<---Equals test--->");
 	System.out.println(d.equals(c));
@@ -25,6 +26,6 @@ public class Console {
 	System.out.println(d.toDays());
 	
 	System.out.println("\n<---Diff test--->");
-	System.out.println(v.diff(c));
+	System.out.println(s.diff(v));
 	}
 }
