@@ -40,31 +40,24 @@ public class Booking
 	public Date getFrom() {
 		return from;
 	}
-
 	public void setFrom(Date from) {
 		this.from = from;
 	}
-
 	public Date getTo() {
 		return to;
 	}
-
 	public void setTo(Date to) {
 		this.to = to;
 	}
-
 	public Guest getBookingGuest() {
 		return BookingGuest;
 	}
-
 	public void setBookingGuest(Guest bookingGuest) {
 		BookingGuest = bookingGuest;
 	}
-
 	public Room getRoom() {
 		return room;
 	}
-
 	public void setRoom(Room room) {
 		this.room = room;
 	}

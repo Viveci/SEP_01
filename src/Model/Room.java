@@ -1,6 +1,6 @@
 package Model;
 
-import java.util.Date;
+import Model.Date;
 
 /**
  * This class stores the hotel's rooms
@@ -12,37 +12,47 @@ public class Room{
 		private int number;
 		private String type;
 		private String size;
-		private Date from;
-		private Date to;
+		private int price;
 		
-		//Room's own connections
-		private Guest guest;
-		private Booking booking;
       
-   public Room(int number, String type, String size, Date startDate, Date endDate){
+   public Room(int number, String type, String size, int price){
 	   this.number = number;
 	   this.type = type;
 	   this.size = size;
-	   this.from = startDate;
-	   this.to = endDate;
+	   this.price = price;
+   }
+   
+   //Getters and setters
+	public String getType(){
+	      return this.type + " " + this.size;
+	   }
 	   
-   }
-   
-   public int getNumber(){
-	   return number;
-   }
-   public String getType(){
-      return this.type + " " + this.size;
-   }
-   public boolean RoomIsAvailable(){
-      return guest ==null;
-   }
-   public boolean isOccupied(){
-      return guest != null; 
-   }
-   public void bookGuest(Guest guest){
-      this.guest = guest;
-   }
-   
+	public int getNumber() {
+		return number;
+	}
+	
+	public void setNumber(int number) {
+		this.number = number;
+	}
+	
+	public String getSize() {
+		return size;
+	}
+	
+	public void setSize(String size) {
+		this.size = size;
+	}
+	
+	public void setType(String type) {
+	this.type = type;
+}
+
+	public int getPrice() {
+		return price;
+	}
+
+	public void setPrice(int price) {
+		this.price = price;
+	}
   
 }

@@ -2,6 +2,8 @@ package Main;
 
 import Model.Booking;
 import Model.Date;
+import Model.Guest;
+import Model.Room;
 
 public class Console {
 	public static void main(String[] args) {
@@ -13,6 +15,8 @@ public class Console {
 	Date s = new Date("1/1/2015");
 	
 	Guest g = new Guest("Dony","Fasztudja",d,"Litván");
+	
+	Room r = new Room(123,"Room","Double",s,d);
 	
 	/*
 	System.out.println("<---Syso test--->");
@@ -28,10 +32,15 @@ public class Console {
 	
 	System.out.println("\n<---Diff test--->");
 	System.out.println(s.diff(d));
-	*/
+	
 	
 	System.out.println("Booking class test...");
 	
-	Booking b = new Booking(d, s, , null, 1);
+	Booking b = new Booking(d, s, g, r, 1);
+	System.out.println(b.getBookingGuest().getName());
+	System.out.println(b.getBookingGuest().getDateOfBirth());
+	System.out.println(b.getRoom().getNumber());
+	System.out.println(r.getBooking().getBookingGuest());
+	*/
 	}
 }
