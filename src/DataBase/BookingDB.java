@@ -35,8 +35,9 @@ public class BookingDB {
 		int counter = 0;
 		
 		for (int i = 0; i < db.size(); i++) {
-			if((to.toDays()<=db.get(i).getFrom().toDays() && from.toDays()<=db.get(i).getFrom().toDays()) ||
-					(to.toDays()>=db.get(i).getFrom().toDays() && from.toDays()>=db.get(i).getFrom().toDays())){
+			if(to.toDays()<=db.get(i).getTo().toDays() && from.toDays() >= db.get(i).getFrom().toDays() ||
+					(to.toDays()>db.get(i).getTo().toDays() && from.toDays()>= db.get(i).getFrom().toDays()) ||
+					(from.toDays()<db.get(i).getFrom().toDays() && to.toDays() > db.get(i).getFrom().toDays())){
 				counter++;
 			}
 		}
@@ -44,8 +45,9 @@ public class BookingDB {
 		int[] ids = new int[counter];
 		
 		for (int i = 0; i < db.size(); i++) {
-			if((to.toDays()<=db.get(i).getFrom().toDays() && from.toDays()<=db.get(i).getFrom().toDays()) ||
-					(to.toDays()>=db.get(i).getFrom().toDays() && from.toDays()>=db.get(i).getFrom().toDays())){
+			if(to.toDays()<=db.get(i).getTo().toDays() && from.toDays() >= db.get(i).getFrom().toDays() ||
+					(to.toDays()>db.get(i).getTo().toDays() && from.toDays()>= db.get(i).getFrom().toDays()) ||
+					(from.toDays()<db.get(i).getFrom().toDays() && to.toDays() > db.get(i).getFrom().toDays())){
 				ids[i] = db.get(i).getId();
 			}
 		}

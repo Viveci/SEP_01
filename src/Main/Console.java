@@ -35,10 +35,10 @@ public class Console {
 		
 		bdb.addBooking(b1);
 		
-		Date testFrom = new Date(6,5,2015);
-		Date testTo = new Date(7,5,2015);
+		Date testFrom = new Date(5,5,2015);
+		Date testTo = new Date(11,5,2015);
 		
-		ArrayList<Room> filter = db.filter(bdb.dateFilter(from, to));
+		ArrayList<Room> filter = db.filter(bdb.dateFilter(testFrom, testTo));
 		
 		for (int i = 0; i < filter.size(); i++) {
 			System.out.println(filter.get(i).toString());
