@@ -1,18 +1,16 @@
 package Model;
 
-import Model.Date;
-
 /**
  * This class stores the hotel's rooms
  * */
 
 public class Room{
 	
-		//Room's simple variables
-		private int number;
-		private String type;
-		private String size;
-		private int price;
+	//Room's simple variables
+	private int number;
+	private String type;
+	private String size;
+	private int price;
 		
       
    public Room(int number, String type, String size, int price){
@@ -24,7 +22,7 @@ public class Room{
    
    //Getters and setters
 	public String getType(){
-	      return this.type + " " + this.size;
+	      return this.type;
 	   }
 	   
 	public int getNumber() {
@@ -55,4 +53,8 @@ public class Room{
 		this.price = price;
 	}
   
+	public String toString(){
+		return this.type + " " + this.size;
+	}
+	
 }

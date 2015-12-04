@@ -15,8 +15,11 @@ public class Guest{
       this.dateOfBirth = dateOfBirth;
       this.nationality = nationality;
    }
-
-   	//Setters and Getters
+   
+   	public Guest() {
+	super();
+}
+	//Setters and Getters
 	public String getName() {
 		return name;
 	}

@@ -12,6 +12,7 @@ public class Booking
 	//Booked from ... to
 	private Date from;
 	private Date to;
+	private int period;
 	
 	//Booked by...
 	private Guest BookingGuest;
@@ -21,15 +22,25 @@ public class Booking
 	//Booked the...
 	private Room room;
 	
+	private int id;
+	
 	public Booking(Date from, Date to, Guest bg, Room room, int numGuest){
 		this.from = from;
 		this.to = to;
 		this.BookingGuest = bg;
 		this.room = room;
 		this.numGuest = numGuest;
+		period =this.from.diff(this.to);
+	}
+	
+	public Booking(){
+		this.from = null;
+		this.to = null;
+		this.BookingGuest = null;
+		this.numGuest = 0;
+		this.room = null;
 	}
 
-	
 	//Setters and Getters
 	public int getNumGuest() {
 		return numGuest;
@@ -60,6 +71,18 @@ public class Booking
 	}
 	public void setRoom(Room room) {
 		this.room = room;
+	}
+	
+	public void setId(int id){
+		this.id = id;
+	}
+	
+	public int getId(){
+		return this.id;
+	}
+	
+	public int getPeriod(){
+		return period;
 	}
 
 	
