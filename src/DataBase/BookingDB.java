@@ -60,5 +60,17 @@ public class BookingDB {
 		}
 		return ids;
 	}
-
+	
+	public Object[][] toData(){
+		Object[][] data = new Object[db.size()][4];
+		
+		for(int i = 0; i< db.size();i++){
+			Object[] temp = db.get(i).toArray();
+			for(int o = 0; o< 4; o++){
+				data[i][o] = temp[o];
+			}
+		}
+		return data;
+	}
+	
 }

@@ -82,4 +82,9 @@ public class Booking
 		return period;
 	}
 	
+	public Object[] toArray(){
+		Object [] objectarr = {BookingGuest.getName(),room.getNumber() + ". " + room.toString(),from.toString(),to.toString()};
+		return  objectarr;
+	}
+	
 }

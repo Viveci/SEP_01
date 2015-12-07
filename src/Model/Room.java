@@ -87,4 +87,9 @@ public class Room{
 	public int getCapacity(){
 		return capacity;
 	}
+	
+	public Object[] toArray(){
+		Object [] data = {"Room number " + number, this.toString(), capacity, price};
+		return data;
+	}
 }

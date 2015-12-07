@@ -1,6 +1,7 @@
 package DataBase;
 
 import java.util.ArrayList;
+
 import Model.Room;
 
 public class RoomDB {
@@ -146,5 +147,16 @@ public class RoomDB {
 			}
 		}
 		return r;
+	}
+	
+	public Object[][] toData(ArrayList<Room> list){
+		Object[][] data = new Object[list.size()][4];
+		for(int i = 0; i< list.size();i++){
+			Object[] temp = list.get(i).toArray();
+			for(int o = 0; o< 4; o++){
+				data[i][o] = temp[o];
+			}
+		}
+		return data;
 	}
 }
