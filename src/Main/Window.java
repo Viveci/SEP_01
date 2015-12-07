@@ -11,6 +11,7 @@ import Panels.BookingPanel;
 import Panels.CheckOutPanel;
 import Panels.ModifyPanel;
 import Panels.RegisterPanel;
+import javax.swing.JSpinner;
 
 public class Window extends JFrame {
 
@@ -49,6 +50,10 @@ public class Window extends JFrame {
 		JPanel CheckOut = new CheckOutPanel();
 		
 		tabbedPane.add("Booking",Booking);
+		
+		
+		
+		
 		tabbedPane.add("Register",Register);
 		tabbedPane.add("Modify",Modify);
 		tabbedPane.add("Check Out",CheckOut);

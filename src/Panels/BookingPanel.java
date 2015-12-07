@@ -1,12 +1,14 @@
 package Panels;
 
 import java.awt.Font;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSeparator;
+import javax.swing.JSpinner;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
@@ -175,6 +177,8 @@ public class BookingPanel extends JPanel {
 		DateVertical.setOrientation(SwingConstants.VERTICAL);
 		DateVertical.setBounds(170, 240, 2, 195);
 		add(DateVertical);
+		
+		
 	}
 	
 }
