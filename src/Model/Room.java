@@ -11,6 +11,7 @@ public class Room{
 	private String type;
 	private String size;
 	private int price;
+	private int capacity;
 		
       
    public Room(int number, String type, String size, int price){
@@ -18,8 +19,34 @@ public class Room{
 	   this.type = type;
 	   this.size = size;
 	   this.price = price;
+	   
+	   if(size.equals("Single")){
+		   capacity = 1;
+	   }
+	   else if(size.equals("Twin")){
+		   capacity = 2;
+	   }
+	   else if(size.equals("KingSized")){
+		   capacity = 2;
+	   }
+	   else if(size.equals("One")){
+		   capacity = 1;
+	   }
+	   else if(size.equals("Two")){
+		   capacity = 2;
+	   }
+	   else if(size.equals("Three")){
+		   capacity = 3;
+	   }
    }
    
+   public Room(){
+	number = -1;
+	type = "Not set";
+	size = "Not set";
+	price = -1;
+	capacity = -1;
+   }
    //Getters and setters
 	public String getType(){
 	      return this.type;
@@ -57,4 +84,7 @@ public class Room{
 		return this.type + " " + this.size;
 	}
 	
+	public int getCapacity(){
+		return capacity;
+	}
 }

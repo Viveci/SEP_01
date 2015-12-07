@@ -74,6 +74,11 @@ public class RoomDB {
 		
 	}
 
+	/**
+	 * This method is used to filter the list of rooms to show 
+	 * which room is available on the given date.
+	 * Use it together with the BookingDB's dateFilter
+	 * @return ArrayList, available rooms*/
 	public ArrayList<Room> filter (int[] ids){
 		
 		ArrayList<Room> filteredList = new ArrayList<>();
@@ -94,4 +99,52 @@ public class RoomDB {
 		return filteredList;
 	}
 	
+	/**
+	 * This method is used to filter the list further by date.
+	 * Use it together with the BookingDB's dateFilter.
+	 * @return ArrayList, all the available room on date*/
+	public ArrayList<Room> filter (int[] ids, ArrayList<Room> list){
+		
+		ArrayList<Room> filteredList = new ArrayList<>();
+		
+		boolean sameId = false;
+		
+		for(int i = 0; i < list.size(); i++){
+			for(int o = 0; o < ids.length; o++){
+				if(list.get(i).getNumber()==ids[o]){
+					sameId = true;
+				}
+			}
+			if(!sameId){
+				filteredList.add(list.get(i));
+			}
+			sameId = false;
+		}
+		return filteredList;
+	}
+	
+	/**
+	 * Method used to filter the list with a given capacity*/
+	public ArrayList<Room> roomFilter(int number){
+		
+		ArrayList<Room> filteredList = new ArrayList<>();
+		
+		for(int i = 0 ; i < allRoom.size(); i++){
+			if(allRoom.get(i).getCapacity()==number){
+				filteredList.add(allRoom.get(i));
+			}
+		}
+		
+		return filteredList;
+	}
+	
+	public Room getRoom(int number){
+		Room r = new Room();
+		for(int i = 0; i < allRoom.size(); i++){
+			if(allRoom.get(i).getNumber()==number){
+				r = allRoom.get(i);
+			}
+		}
+		return r;
+	}
 }

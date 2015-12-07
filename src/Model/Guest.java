@@ -6,8 +6,7 @@ public class Guest{
    private String address;
    private Date dateOfBirth;
    private String nationality;
-   private Date from;
-   private Date to;
+   //private int BookingID;
    
    public Guest(String name, String address, Date dateOfBirth, String nationality){
       this.name = name;
@@ -50,22 +49,6 @@ public class Guest{
 	
 	public void setNationality(String nationality) {
 		this.nationality = nationality;
-	}
-	
-	public Date getFrom() {
-		return from;
-	}
-	
-	public void setFrom(Date from) {
-		this.from = from;
-	}
-	
-	public Date getTo() {
-		return to;
-	}
-	
-	public void setTo(Date to) {
-		this.to = to;
 	}
    
 }

@@ -72,18 +72,14 @@ public class Booking
 	public void setRoom(Room room) {
 		this.room = room;
 	}
-	
 	public void setId(int id){
 		this.id = id;
 	}
-	
 	public int getId(){
 		return this.id;
 	}
-	
 	public int getPeriod(){
 		return period;
 	}
-
 	
 }

@@ -31,6 +31,9 @@ public class BookingDB {
 		return b;
 	}
 
+	/**
+	 * This method is used to find which apartments are available on a certain time period.
+	 * @return Returns an Integer array, filled with the taken room's numbers*/
 	public int[] dateFilter(Date from, Date to){
 		int counter = 0;
 		
@@ -41,18 +44,21 @@ public class BookingDB {
 				counter++;
 			}
 		}
+		
 		System.out.println(counter);
 		int[] ids = new int[counter];
+		
+		counter=0;
 		
 		for (int i = 0; i < db.size(); i++) {
 			if(to.toDays()<=db.get(i).getTo().toDays() && from.toDays() >= db.get(i).getFrom().toDays() ||
 					(to.toDays()>db.get(i).getTo().toDays() && from.toDays()>= db.get(i).getFrom().toDays()) ||
 					(from.toDays()<db.get(i).getFrom().toDays() && to.toDays() > db.get(i).getFrom().toDays())){
-				ids[i] = db.get(i).getId();
+				ids[counter] = db.get(i).getRoom().getNumber();
+				counter++;
 			}
 		}
-
-		
 		return ids;
 	}
+
 }
