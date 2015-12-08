@@ -1,10 +1,16 @@
 package Model;
 
+import java.io.Serializable;
+
 /**
  * This class stores the hotel's rooms
  * */
 
-public class Room{
+public class Room implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	
 	//Room's simple variables
 	private int number;

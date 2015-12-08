@@ -159,4 +159,8 @@ public class RoomDB {
 		}
 		return data;
 	}
+	
+	public ArrayList<Room> getAllRoom(){
+		return allRoom;
+	}
 }

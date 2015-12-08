@@ -1,5 +1,7 @@
 package Model;
 
+import java.io.Serializable;
+
 /**
  * This class stores all the data for a booking
  * The user of the application fills up the variables with 
@@ -7,8 +9,11 @@ package Model;
  * 
  * <p>Current state can be either modified or deleted by the program
  * */
-public class Booking
-{
+public class Booking implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	//Booked from ... to
 	private Date from;
 	private Date to;

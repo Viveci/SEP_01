@@ -1,5 +1,7 @@
 package Model;
 
+import java.io.Serializable;
+
 /**
  * Date class
  * <p>
@@ -7,7 +9,11 @@ package Model;
  * uses Integer variables to store the day, month year separately.
  * */
 
-public class Date {
+public class Date implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	
 	private int day;
 	private int month;
@@ -15,6 +21,12 @@ public class Date {
 	private boolean isleap;
 	
 	private int[] months;
+	
+	public Date(){
+		day = -1;
+		month = -1;
+		year = -1;
+	}
 	
 	//Constructors
 	public Date(int day, int month, int year){

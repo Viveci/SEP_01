@@ -7,11 +7,10 @@ import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
 
 import java.awt.Font;
-import Panels.BookingPanel;
-import Panels.CheckOutPanel;
+
+import Panels.BookingPanell;
+import Panels.CheckoutPanel;
 import Panels.ModifyPanel;
-import Panels.RegisterPanel;
-import javax.swing.JSpinner;
 
 public class Window extends JFrame {
 
@@ -36,6 +35,7 @@ public class Window extends JFrame {
 	}
 
 	public Window() {
+		setResizable(false);
 				
 		
 		setFont(new Font("Dialog", Font.PLAIN, 12));
@@ -44,12 +44,14 @@ public class Window extends JFrame {
 		setBounds(100, 100, 800, 500);
 		JTabbedPane tabbedPane = new JTabbedPane();
 		
-		JPanel Booking = new BookingPanel();
-		JPanel Register = new RegisterPanel();
+		JPanel Booking = new BookingPanell();
+		JPanel Register = new JPanel();
 		JPanel Modify = new ModifyPanel();
-		JPanel CheckOut = new CheckOutPanel();
+		JPanel CheckOut = new CheckoutPanel();
 		
 		tabbedPane.add("Booking",Booking);
+		
+		
 		
 		
 		
