@@ -17,9 +17,14 @@ import javax.swing.JSeparator;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.event.CaretEvent;
+import javax.swing.event.CaretListener;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
+import sun.text.normalizer.CharTrie.FriendAgent;
 import DataBase.BookingDB;
 import DataBase.RoomDB;
 import Model.Booking;
@@ -47,6 +52,9 @@ public class BookingPanell extends JPanel {
 	private Room room;
 	private String address;
 	
+	private int[] inputs = new int[7]; 
+	private Boolean global;
+	
 	private DefaultTableModel tableModel;
 	
 	private static String[] columnNames = {"Room number",
@@ -60,7 +68,10 @@ public class BookingPanell extends JPanel {
 
 	public BookingPanell(){
 		
+		global = false;
+		
 		setBounds(100, 100, 800, 430);
+		setLayout(null);
 		
 		gName = "";
 		nGuests = -1;
@@ -68,8 +79,7 @@ public class BookingPanell extends JPanel {
 		birthDate = new Date();	
 		room = new Room();
 		
-		//Booking panel elements
-		setLayout(null);
+		
 		
 		//Jlabel Guest
 		JLabel GuestLabel = new JLabel("Guest");
@@ -83,23 +93,11 @@ public class BookingPanell extends JPanel {
 		lblFirstName.setBounds(10, 45, 150, 14);
 		add(lblFirstName);
 		
-		//JTextField Name
-		FirstName = new JTextField();
-		FirstName.setToolTipText("Name");
-		FirstName.setBounds(10, 60, 150, 20);
-		add(FirstName);
-		
 		//Jlabel Number of guests
 		JLabel lblLastname = new JLabel("Number of guests");
 		lblLastname.setFont(new Font("Arial", Font.PLAIN, 14));
 		lblLastname.setBounds(10, 355, 150, 15);
 		add(lblLastname);
-		
-		//JTextField Number of guests
-		NumGuests = new JTextField();
-		NumGuests.setToolTipText("Number of guests");
-		NumGuests.setBounds(10, 370, 150, 20);
-		add(NumGuests);
 		
 		//JLabel Nationality
 		JLabel label = new JLabel("Nationality");
@@ -107,74 +105,16 @@ public class BookingPanell extends JPanel {
 		label.setBounds(10, 135, 150, 14);
 		add(label);
 		
-		//JTextField NATIONALITY
-		Natinoality = new JTextField();
-		Natinoality.setToolTipText("Nationality");
-		Natinoality.setBounds(10, 150, 150, 20);
-		add(Natinoality);
-		
-		//JLable Birthdate
-		JLabel lblBirthDate = new JLabel("Birth date");
-		lblBirthDate.setFont(new Font("Arial", Font.PLAIN, 14));
-		lblBirthDate.setBounds(10, 180, 150, 14);
-		add(lblBirthDate);
-		
-		//JTextField NATIONALITY
-		BirthDate = new JTextField();
-		BirthDate.setToolTipText("BirthDate");
-		BirthDate.setBounds(10, 195, 150, 20);
-		add(BirthDate);		
-		
 		JLabel AdressLabel = new JLabel("Address");
 		AdressLabel.setFont(new Font("Arial", Font.PLAIN, 14));
 		AdressLabel.setBounds(10, 89, 150, 14);
 		add(AdressLabel);
 		
-		Address = new JTextField();
-		Address.setToolTipText("Name");
-		Address.setBounds(10, 104, 150, 20);
-		add(Address);
-		
-		//<-------------------------------------JTabel filler------------------------------------------------>				
-					
-		ArrayList<Room> list = db.getAllRoom();
-		
-		Object[][] data = db.toData(list);
-		
-		tableModel = new DefaultTableModel(data,columnNames);
-		
-		table = new JTable(tableModel);
-		
-		scrollPane = new JScrollPane(table);
-		scrollPane.setSize(590, 221);
-		scrollPane.setLocation(180, 10);
-		table.setFillsViewportHeight(true);
-		add(scrollPane);
-		
-		
-		
-		table.addMouseListener(new MouseAdapter(){
-		    public void mouseClicked(MouseEvent evnt) {
-		        if (evnt.getClickCount() == 1) {
-		        	System.out.println(table.getValueAt(table.getSelectedRow(), 0).toString());
-		         }
-		     }
-		});
-		
-		//<------------------------------------------------------------------------------------------------------>
-		
-		JSeparator GuestVertical = new JSeparator();
-		GuestVertical.setOrientation(SwingConstants.VERTICAL);
-		GuestVertical.setBounds(170, 0, 2, 230);
-		add(GuestVertical);
-		
-		JSeparator GuestHorizontal = new JSeparator();
-		GuestHorizontal.setBounds(0, 230, 170, 2);
-		add(GuestHorizontal);
-		
-		JSeparator HorizontalEq = new JSeparator();
-		HorizontalEq.setBounds(0, 240, 800, 2);
-		add(HorizontalEq);
+		//JLable Birth date
+		JLabel lblBirthDate = new JLabel("Birth date");
+		lblBirthDate.setFont(new Font("Arial", Font.PLAIN, 14));
+		lblBirthDate.setBounds(10, 180, 150, 14);
+		add(lblBirthDate);
 		
 		JLabel FilterLabel = new JLabel("Filters");
 		FilterLabel.setFont(new Font("Arial", Font.BOLD, 16));
@@ -186,27 +126,231 @@ public class BookingPanell extends JPanel {
 		DateFromLabel.setBounds(10, 265, 150, 14);
 		add(DateFromLabel);
 		
-		DateFrom = new JTextField();
-		DateFrom.setToolTipText("From");
-		DateFrom.setBounds(10, 280, 150, 20);
-		add(DateFrom);
+		JSeparator GuestVertical = new JSeparator();
+		GuestVertical.setOrientation(SwingConstants.VERTICAL);
+		GuestVertical.setBounds(170, 0, 2, 230);
+		add(GuestVertical);
 				
 		JLabel DateToLabel = new JLabel("To");
 		DateToLabel.setFont(new Font("Arial", Font.PLAIN, 14));
 		DateToLabel.setBounds(10, 310, 150, 14);
 		add(DateToLabel);
 		
-		DateTo = new JTextField();
-		DateTo.setToolTipText("To");
-		DateTo.setBounds(10, 325, 150, 20);
-		add(DateTo);
+		JSeparator GuestHorizontal = new JSeparator();
+		GuestHorizontal.setBounds(0, 230, 170, 2);
+		add(GuestHorizontal);
+		
+		JSeparator HorizontalEq = new JSeparator();
+		HorizontalEq.setBounds(0, 240, 800, 2);
+		add(HorizontalEq);
 		
 		JSeparator DateVertical = new JSeparator();
 		DateVertical.setOrientation(SwingConstants.VERTICAL);
 		DateVertical.setBounds(170, 240, 2, 195);
 		add(DateVertical);
 		
+		
+		
+		
+		//JTextField Name
+		FirstName = new JTextField();
+		FirstName.setToolTipText("Name");
+		FirstName.setBounds(10, 60, 150, 20);
+		add(FirstName);
+		
+		FirstName.addCaretListener(new CaretListener() {
+	        @Override
+	        public void caretUpdate(CaretEvent e) {
+	        	if(!FirstName.getText().isEmpty()){
+	        		inputs[0] = 1;
+	        	}
+	        	else{
+	        		inputs[0] = 0;
+	        	}
+	        	
+	        	for(int i = 0; i < inputs.length; i++){
+	        		if(inputs[i]==1){
+	        			global = true;
+	        		}
+	        	}
+	        	
+	        }
+	    });
+		
+		//JTextField Number of guests
+		NumGuests = new JTextField();
+		NumGuests.setToolTipText("Number of guests");
+		NumGuests.setBounds(10, 370, 150, 20);
+		add(NumGuests);
+		
+		NumGuests.addCaretListener(new CaretListener() {
+	        @Override
+	        public void caretUpdate(CaretEvent e) {
+	        	if(!NumGuests.getText().isEmpty()){
+	        		inputs[0] = 1;
+	        	}
+	        	else{
+	        		inputs[0] = 0;
+	        	}
+	        	
+	        	for(int i = 0; i < inputs.length; i++){
+	        		if(inputs[i]==1){
+	        			global = true;
+	        		}
+	        	}
+	        	
+	        }
+	    });
+		
+		//JTextField NATIONALITY
+		Natinoality = new JTextField();
+		Natinoality.setToolTipText("Nationality");
+		Natinoality.setBounds(10, 150, 150, 20);
+		add(Natinoality);
+		
+		Natinoality.addCaretListener(new CaretListener() {
+	        @Override
+	        public void caretUpdate(CaretEvent e) {
+	        	if(!Natinoality.getText().isEmpty()){
+	        		inputs[0] = 1;
+	        	}
+	        	else{
+	        		inputs[0] = 0;
+	        	}
+	        	
+	        	for(int i = 0; i < inputs.length; i++){
+	        		if(inputs[i]==1){
+	        			global = true;
+	        		}
+	        	}
+	        	
+	        }
+	    });
+				
+		//JTextField NATIONALITY
+		BirthDate = new JTextField();
+		BirthDate.setToolTipText("BirthDate");
+		BirthDate.setBounds(10, 195, 150, 20);
+		add(BirthDate);
+		
+		BirthDate.addCaretListener(new CaretListener() {
+	        @Override
+	        public void caretUpdate(CaretEvent e) {
+	        	if(!BirthDate.getText().isEmpty()){
+	        		inputs[0] = 1;
+	        	}
+	        	else{
+	        		inputs[0] = 0;
+	        	}
+	        	
+	        	for(int i = 0; i < inputs.length; i++){
+	        		if(inputs[i]==1){
+	        			global = true;
+	        		}
+	        	}
+	        	
+	        }
+	    });
+		
+		//JTextField Address
+		Address = new JTextField();
+		Address.setToolTipText("Name");
+		Address.setBounds(10, 104, 150, 20);
+		add(Address);
+		
+		Address.addCaretListener(new CaretListener() {
+	        @Override
+	        public void caretUpdate(CaretEvent e) {
+	        	if(!Address.getText().isEmpty()){
+	        		inputs[0] = 1;
+	        	}
+	        	else{
+	        		inputs[0] = 0;
+	        	}
+	        	
+	        	for(int i = 0; i < inputs.length; i++){
+	        		if(inputs[i]==1){
+	        			global = true;
+	        		}
+	        	}
+	        	
+	        }
+	    });
+		
+		DateFrom = new JTextField();
+		DateFrom.setToolTipText("From");
+		DateFrom.setBounds(10, 280, 150, 20);
+		add(DateFrom);
+		
+		DateFrom.addCaretListener(new CaretListener() {
+	        @Override
+	        public void caretUpdate(CaretEvent e) {
+	        	if(!DateFrom.getText().isEmpty()){
+	        		inputs[0] = 1;
+	        	}
+	        	else{
+	        		inputs[0] = 0;
+	        	}
+	        	
+	        	for(int i = 0; i < inputs.length; i++){
+	        		if(inputs[i]==1){
+	        			global = true;
+	        		}
+	        	}
+	        	
+	        }
+	    });
+		
+		DateTo = new JTextField();
+		DateTo.setToolTipText("To");
+		DateTo.setBounds(10, 325, 150, 20);
+		add(DateTo);
+		
+		DateTo.addCaretListener(new CaretListener() {
+	        @Override
+	        public void caretUpdate(CaretEvent e) {
+	        	if(!DateTo.getText().isEmpty()){
+	        		inputs[0] = 1;
+	        	}
+	        	else{
+	        		inputs[0] = 0;
+	        	}
+	        	
+	        	for(int i = 0; i < inputs.length; i++){
+	        		if(inputs[i]==1){
+	        			global = true;
+	        		}
+	        	}
+	        	
+	        }
+	    });
+		
+		//<-------------------------------------JTabel filler------------------------------------------------>				
+					
+		ArrayList<Room> list = db.getAllRoom();
+		
+		Object[][] data = db.toData(list);
+		
+		refreshTable(data);
+				
+		scrollPane = new JScrollPane(table);
+		scrollPane.setSize(590, 221);
+		scrollPane.setLocation(180, 10);
+		table.setFillsViewportHeight(true);
+		add(scrollPane);
+		
+		table.addMouseListener(new MouseAdapter(){
+		    public void mouseClicked(MouseEvent evnt) {
+		        if (evnt.getClickCount() == 1) {
+		        	System.out.println(table.getValueAt(table.getSelectedRow(), 0).toString());
+		         }
+		     }
+		});
+		
+		//<------------------------------------------------------------------------------------------------------>
+						
 		JButton SaveBooking = new JButton("Save booking");
+		SaveBooking.setEnabled(global);
 		SaveBooking.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 								
@@ -229,14 +373,7 @@ public class BookingPanell extends JPanel {
 				
 				Object[][] data = db.toData(list2);
 				
-				tableModel = new DefaultTableModel(data,columnNames);				
-				table.setModel(tableModel);				
-				table.repaint();
-//				JScrollPane scrollPane = new JScrollPane(table);
-//				scrollPane.setSize(590, 221);
-//				scrollPane.setLocation(180, 10);
-//				table.setFillsViewportHeight(true);
-//				add(scrollPane);
+				refreshTable(data);
 				
 				bdb.serialize();
 			}
@@ -313,5 +450,10 @@ public class BookingPanell extends JPanel {
 		
 		
 		
+	}
+
+	private void refreshTable(Object[][] data) {
+		tableModel = new DefaultTableModel(data,columnNames);
+		table = new JTable(tableModel);
 	}
 }

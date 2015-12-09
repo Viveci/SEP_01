@@ -153,10 +153,19 @@ public class BookingDB implements Serializable{
 		return list1;
 	}
 
-	public ArrayList<Booking> filter(Date date, ArrayList<Booking> list) {
+	public ArrayList<Booking> filterf(Date date, ArrayList<Booking> list) {
 		ArrayList<Booking> list1 = new ArrayList<>();
 		for (int i = 0; i < list.size(); i++) {
 			if(list.get(i).getFrom().equals(date)){
+				list1.add(list.get(i));
+			}
+		}
+		return list1;
+	}
+	public ArrayList<Booking> filtert(Date date, ArrayList<Booking> list) {
+		ArrayList<Booking> list1 = new ArrayList<>();
+		for (int i = 0; i < list.size(); i++) {
+			if(list.get(i).getTo().equals(date)){
 				list1.add(list.get(i));
 			}
 		}

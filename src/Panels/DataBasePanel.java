@@ -164,11 +164,11 @@ public class DataBasePanel extends JPanel {
 						}
 						if(!DateFromText.getText().isEmpty()){
 							from = new Date(DateFromText.getText());
-							list = bdb.filter(from,list);
+							list = bdb.filterf(from,list);
 						}
 						if(!DateToText.getText().isEmpty()){
 							to = new Date(DateToText.getText());
-							list = bdb.filter(to,list);
+							list = bdb.filtert(to,list);
 						}
 						Object[][] data = bdb.toData(list);
 						refreshTable(data);
