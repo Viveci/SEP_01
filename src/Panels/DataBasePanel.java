@@ -2,6 +2,7 @@ package Panels;
 
 import java.util.ArrayList;
 
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -24,11 +25,16 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JSeparator;
 
+import java.awt.Color;
+
+import javax.swing.SwingConstants;
+
 public class DataBasePanel extends JPanel {
 	
 	private RoomDB db = new RoomDB();
 	private BookingDB bdb = new BookingDB();
 	
+	private JPanel TablePanel; 
 	private JScrollPane scrollPane;
 	private DefaultTableModel tableModel;
 	private JTable table;
@@ -48,6 +54,8 @@ public class DataBasePanel extends JPanel {
 	private Date from;
 	private Date to;
 	
+	private int checkout = 1;
+	
 	public DataBasePanel(){
 		setLayout(null);
 		setBounds(100, 100, 800, 430);
@@ -60,13 +68,28 @@ public class DataBasePanel extends JPanel {
 				
 				Object[][] data = bdb.toData();				
 				tableModel = new DefaultTableModel(data,columnNames);				
-				table = new JTable(tableModel);
 				
+		//<----------------------------Table Panel----------------------------------------->
+				TablePanel = new JPanel();
+				TablePanel.setBounds(10, 10, 770, 300);
+				add(TablePanel);
+				TablePanel.setLayout(null);
+				table = new JTable(tableModel);				
 				scrollPane = new JScrollPane(table);
-				scrollPane.setSize(780, 300);
-				scrollPane.setLocation(10, 10);
+				scrollPane.setBounds(0, 0, 770, 300);
+				TablePanel.add(scrollPane);
 				table.setFillsViewportHeight(true);
-				add(scrollPane);
+		//<----------------------------Table Panel----------------------------------------->
+				
+		//<----------------------------Table Panel----------------------------------------->
+				
+				CheckoutPanel checkoutpanel = new CheckoutPanel();
+				checkoutpanel.setBounds(10, 10, 770, 300);
+				add(checkoutpanel);
+				checkoutpanel.setVisible(false);
+				
+		//<----------------------------Table Panel----------------------------------------->
+				
 				
 				JButton RefreshButton = new JButton("Refresh");
 				RefreshButton.addActionListener(new ActionListener() {
@@ -81,7 +104,7 @@ public class DataBasePanel extends JPanel {
 
 					
 				});
-				RefreshButton.setBounds(690, 368, 100, 25);
+				RefreshButton.setBounds(680, 368, 100, 25);
 				add(RefreshButton);
 				
 				JButton ClearDB = new JButton("Clear DB");
@@ -90,7 +113,7 @@ public class DataBasePanel extends JPanel {
 						bdb.clear();
 					}
 				});
-				ClearDB.setBounds(690, 395, 100, 25);
+				ClearDB.setBounds(680, 395, 100, 25);
 				add(ClearDB);
 				
 				
@@ -179,19 +202,43 @@ public class DataBasePanel extends JPanel {
 				add(FilterButton);
 				
 				JButton CheckoutButton = new JButton("Check out");
-				CheckoutButton.setBounds(380, 396, 100, 25);
+				CheckoutButton.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						
+						checkout *= -1;
+						if(checkout>0){
+							TablePanel.setVisible(true);
+							checkoutpanel.setVisible(false);
+						}
+						else{
+							TablePanel.setVisible(false);
+							checkoutpanel.setVisible(true);
+						}
+					}
+				});
+				CheckoutButton.setBounds(380, 396, 120, 25);
 				add(CheckoutButton);
 				
 				JButton CheckinButton = new JButton("Check in");
-				CheckinButton.setBounds(380, 368, 100, 25);
+				CheckinButton.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+					}
+				});
+				CheckinButton.setBounds(380, 368, 120, 25);
 				add(CheckinButton);
 				
 				JButton EditButton = new JButton("Edit booking");
-				EditButton.setBounds(380, 340, 100, 25);
+				EditButton.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+					}
+				});
+				EditButton.setBounds(380, 340, 120, 25);
 				add(EditButton);
 				
 				JSeparator separator = new JSeparator();
-				separator.setBounds(375, 310, 2, 120);
+				separator.setOrientation(SwingConstants.VERTICAL);
+				separator.setBackground(Color.LIGHT_GRAY);
+				separator.setBounds(370, 310, 2, 120);
 				add(separator);
 		
 	}

@@ -1,6 +1,7 @@
 package Panels;
 
 import javax.swing.JPanel;
+import javax.swing.JButton;
 
 public class CheckoutPanel extends JPanel {
 
@@ -8,7 +9,12 @@ public class CheckoutPanel extends JPanel {
 
 	public CheckoutPanel() {
 		
-		setBounds(100, 100, 800, 430);
+		setBounds(0, 0, 770, 300);
+		setLayout(null);
+		
+		JButton btnNewButton = new JButton("New button");
+		btnNewButton.setBounds(321, 216, 89, 23);
+		add(btnNewButton);
 
 	}
 

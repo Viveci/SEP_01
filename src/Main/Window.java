@@ -41,7 +41,7 @@ public class Window extends JFrame {
 		setFont(new Font("Dialog", Font.PLAIN, 12));
 		setTitle("Deer Alley Hotel Booking System");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 800, 500);
+		setBounds(100, 100, 800, 485);
 		JTabbedPane tabbedPane = new JTabbedPane();
 		
 		JPanel Booking = new BookingPanell();

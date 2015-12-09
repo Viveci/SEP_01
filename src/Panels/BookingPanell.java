@@ -393,7 +393,8 @@ public class BookingPanell extends JPanel {
 		
 		Object[][] data = db.toData(list);
 		
-		refreshTable(data);
+		tableModel = new DefaultTableModel(data,columnNames);
+		table = new JTable(tableModel);
 				
 		scrollPane = new JScrollPane(table);
 		scrollPane.setSize(590, 221);
@@ -435,7 +436,8 @@ public class BookingPanell extends JPanel {
 				
 				Object[][] data = db.toData(list2);
 				
-				refreshTable(data);
+				tableModel = new DefaultTableModel(data,columnNames);
+				table.setModel(tableModel);
 				
 				bdb.serialize();
 			}
@@ -509,12 +511,6 @@ public class BookingPanell extends JPanel {
 		add(RefreshButton);
 		
 		
-		
-		
 	}
 
-	private void refreshTable(Object[][] data) {
-		tableModel = new DefaultTableModel(data,columnNames);
-		table = new JTable(tableModel);
-	}
 }
