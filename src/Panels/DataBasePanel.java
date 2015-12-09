@@ -176,6 +176,18 @@ public class DataBasePanel extends JPanel {
 				});
 				FilterButton.setBounds(260, 368, 100, 25);
 				add(FilterButton);
+				
+				JButton btnNewButton = new JButton("New button");
+				btnNewButton.setBounds(370, 396, 100, 25);
+				add(btnNewButton);
+				
+				JButton btnNewButton_1 = new JButton("New button");
+				btnNewButton_1.setBounds(370, 369, 100, 25);
+				add(btnNewButton_1);
+				
+				JButton btnNewButton_2 = new JButton("New button");
+				btnNewButton_2.setBounds(370, 340, 100, 25);
+				add(btnNewButton_2);
 		
 	}
 	

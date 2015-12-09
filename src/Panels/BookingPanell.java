@@ -44,6 +44,7 @@ public class BookingPanell extends JPanel {
 	private JTextField DateTo;
 	private JTable table;
 	private JScrollPane scrollPane;
+	private JButton SaveBooking;
 	
 	private String gName;
 	private int nGuests;
@@ -168,12 +169,21 @@ public class BookingPanell extends JPanel {
 	        		inputs[0] = 0;
 	        	}
 	        	
+
+	        	Boolean all = true;
 	        	for(int i = 0; i < inputs.length; i++){
-	        		if(inputs[i]==1){
-	        			global = true;
+	        		if(inputs[i]==0){
+	        			all = false;
 	        		}
 	        	}
 	        	
+	        	if(all){
+	        		global = true;
+	        	}
+	        	else{
+	        		global = false;
+	        	}
+	        	SaveBooking.setEnabled(global);
 	        }
 	    });
 		
@@ -187,18 +197,27 @@ public class BookingPanell extends JPanel {
 	        @Override
 	        public void caretUpdate(CaretEvent e) {
 	        	if(!NumGuests.getText().isEmpty()){
-	        		inputs[0] = 1;
+	        		inputs[1] = 1;
 	        	}
 	        	else{
-	        		inputs[0] = 0;
+	        		inputs[1] = 0;
 	        	}
 	        	
+
+	        	Boolean all = true;
 	        	for(int i = 0; i < inputs.length; i++){
-	        		if(inputs[i]==1){
-	        			global = true;
+	        		if(inputs[i]==0){
+	        			all = false;
 	        		}
 	        	}
 	        	
+	        	if(all){
+	        		global = true;
+	        	}
+	        	else{
+	        		global = false;
+	        	}
+	        	SaveBooking.setEnabled(global);
 	        }
 	    });
 		
@@ -212,18 +231,27 @@ public class BookingPanell extends JPanel {
 	        @Override
 	        public void caretUpdate(CaretEvent e) {
 	        	if(!Natinoality.getText().isEmpty()){
-	        		inputs[0] = 1;
+	        		inputs[2] = 1;
 	        	}
 	        	else{
-	        		inputs[0] = 0;
+	        		inputs[2] = 0;
 	        	}
 	        	
+
+	        	Boolean all = true;
 	        	for(int i = 0; i < inputs.length; i++){
-	        		if(inputs[i]==1){
-	        			global = true;
+	        		if(inputs[i]==0){
+	        			all = false;
 	        		}
 	        	}
 	        	
+	        	if(all){
+	        		global = true;
+	        	}
+	        	else{
+	        		global = false;
+	        	}
+	        	SaveBooking.setEnabled(global);
 	        }
 	    });
 				
@@ -237,18 +265,27 @@ public class BookingPanell extends JPanel {
 	        @Override
 	        public void caretUpdate(CaretEvent e) {
 	        	if(!BirthDate.getText().isEmpty()){
-	        		inputs[0] = 1;
+	        		inputs[3] = 1;
 	        	}
 	        	else{
-	        		inputs[0] = 0;
+	        		inputs[3] = 0;
 	        	}
 	        	
+
+	        	Boolean all = true;
 	        	for(int i = 0; i < inputs.length; i++){
-	        		if(inputs[i]==1){
-	        			global = true;
+	        		if(inputs[i]==0){
+	        			all = false;
 	        		}
 	        	}
 	        	
+	        	if(all){
+	        		global = true;
+	        	}
+	        	else{
+	        		global = false;
+	        	}
+	        	SaveBooking.setEnabled(global);
 	        }
 	    });
 		
@@ -262,18 +299,27 @@ public class BookingPanell extends JPanel {
 	        @Override
 	        public void caretUpdate(CaretEvent e) {
 	        	if(!Address.getText().isEmpty()){
-	        		inputs[0] = 1;
+	        		inputs[4] = 1;
 	        	}
 	        	else{
-	        		inputs[0] = 0;
+	        		inputs[4] = 0;
 	        	}
 	        	
+
+	        	Boolean all = true;
 	        	for(int i = 0; i < inputs.length; i++){
-	        		if(inputs[i]==1){
-	        			global = true;
+	        		if(inputs[i]==0){
+	        			all = false;
 	        		}
 	        	}
 	        	
+	        	if(all){
+	        		global = true;
+	        	}
+	        	else{
+	        		global = false;
+	        	}
+	        	SaveBooking.setEnabled(global);
 	        }
 	    });
 		
@@ -286,18 +332,27 @@ public class BookingPanell extends JPanel {
 	        @Override
 	        public void caretUpdate(CaretEvent e) {
 	        	if(!DateFrom.getText().isEmpty()){
-	        		inputs[0] = 1;
+	        		inputs[5] = 1;
 	        	}
 	        	else{
-	        		inputs[0] = 0;
+	        		inputs[5] = 0;
 	        	}
 	        	
+
+	        	Boolean all = true;
 	        	for(int i = 0; i < inputs.length; i++){
-	        		if(inputs[i]==1){
-	        			global = true;
+	        		if(inputs[i]==0){
+	        			all = false;
 	        		}
 	        	}
 	        	
+	        	if(all){
+	        		global = true;
+	        	}
+	        	else{
+	        		global = false;
+	        	}
+	        	SaveBooking.setEnabled(global);
 	        }
 	    });
 		
@@ -310,18 +365,25 @@ public class BookingPanell extends JPanel {
 	        @Override
 	        public void caretUpdate(CaretEvent e) {
 	        	if(!DateTo.getText().isEmpty()){
-	        		inputs[0] = 1;
+	        		inputs[6] = 1;
 	        	}
 	        	else{
-	        		inputs[0] = 0;
+	        		inputs[6] = 0;
 	        	}
-	        	
+	        	Boolean all = true;
 	        	for(int i = 0; i < inputs.length; i++){
-	        		if(inputs[i]==1){
-	        			global = true;
+	        		if(inputs[i]==0){
+	        			all = false;
 	        		}
 	        	}
 	        	
+	        	if(all){
+	        		global = true;
+	        	}
+	        	else{
+	        		global = false;
+	        	}
+	        	SaveBooking.setEnabled(global);
 	        }
 	    });
 		
@@ -349,7 +411,7 @@ public class BookingPanell extends JPanel {
 		
 		//<------------------------------------------------------------------------------------------------------>
 						
-		JButton SaveBooking = new JButton("Save booking");
+		SaveBooking = new JButton("Save booking");
 		SaveBooking.setEnabled(global);
 		SaveBooking.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -384,7 +446,6 @@ public class BookingPanell extends JPanel {
 		JButton Clear = new JButton("Clear all");
 		Clear.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
 				
 			}
 		});
