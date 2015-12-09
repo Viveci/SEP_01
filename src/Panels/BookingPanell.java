@@ -39,11 +39,13 @@ public class BookingPanell extends JPanel {
 	private JTextField DateTo;
 	private JTable table;
 	private JScrollPane scrollPane;
+	
 	private String gName;
 	private int nGuests;
 	private String nationality;
 	private Date birthDate;	
 	private Room room;
+	private String address;
 	
 	private DefaultTableModel tableModel;
 	
@@ -54,6 +56,7 @@ public class BookingPanell extends JPanel {
 	
 
 	private static final long serialVersionUID = 1L;
+	private JTextField Address;
 
 	public BookingPanell(){
 		
@@ -89,13 +92,13 @@ public class BookingPanell extends JPanel {
 		//Jlabel Number of guests
 		JLabel lblLastname = new JLabel("Number of guests");
 		lblLastname.setFont(new Font("Arial", Font.PLAIN, 14));
-		lblLastname.setBounds(10, 90, 150, 14);
+		lblLastname.setBounds(10, 355, 150, 15);
 		add(lblLastname);
 		
 		//JTextField Number of guests
 		NumGuests = new JTextField();
 		NumGuests.setToolTipText("Number of guests");
-		NumGuests.setBounds(10, 105, 150, 20);
+		NumGuests.setBounds(10, 370, 150, 20);
 		add(NumGuests);
 		
 		//JLabel Nationality
@@ -121,6 +124,16 @@ public class BookingPanell extends JPanel {
 		BirthDate.setToolTipText("BirthDate");
 		BirthDate.setBounds(10, 195, 150, 20);
 		add(BirthDate);		
+		
+		JLabel AdressLabel = new JLabel("Address");
+		AdressLabel.setFont(new Font("Arial", Font.PLAIN, 14));
+		AdressLabel.setBounds(10, 89, 150, 14);
+		add(AdressLabel);
+		
+		Address = new JTextField();
+		Address.setToolTipText("Name");
+		Address.setBounds(10, 104, 150, 20);
+		add(Address);
 		
 		//<-------------------------------------JTabel filler------------------------------------------------>				
 					
@@ -163,29 +176,29 @@ public class BookingPanell extends JPanel {
 		HorizontalEq.setBounds(0, 240, 800, 2);
 		add(HorizontalEq);
 		
-		JLabel DateLabel = new JLabel("Date");
-		DateLabel.setFont(new Font("Arial", Font.BOLD, 16));
-		DateLabel.setBounds(10, 245, 46, 20);
-		add(DateLabel);
+		JLabel FilterLabel = new JLabel("Filters");
+		FilterLabel.setFont(new Font("Arial", Font.BOLD, 16));
+		FilterLabel.setBounds(10, 245, 150, 20);
+		add(FilterLabel);
 		
 		JLabel DateFromLabel = new JLabel("From");
 		DateFromLabel.setFont(new Font("Arial", Font.PLAIN, 14));
-		DateFromLabel.setBounds(10, 275, 150, 14);
+		DateFromLabel.setBounds(10, 265, 150, 14);
 		add(DateFromLabel);
 		
 		DateFrom = new JTextField();
 		DateFrom.setToolTipText("From");
-		DateFrom.setBounds(10, 290, 150, 20);
+		DateFrom.setBounds(10, 280, 150, 20);
 		add(DateFrom);
-		
+				
 		JLabel DateToLabel = new JLabel("To");
 		DateToLabel.setFont(new Font("Arial", Font.PLAIN, 14));
-		DateToLabel.setBounds(10, 320, 150, 14);
+		DateToLabel.setBounds(10, 310, 150, 14);
 		add(DateToLabel);
 		
 		DateTo = new JTextField();
 		DateTo.setToolTipText("To");
-		DateTo.setBounds(10, 335, 150, 20);
+		DateTo.setBounds(10, 325, 150, 20);
 		add(DateTo);
 		
 		JSeparator DateVertical = new JSeparator();
@@ -201,10 +214,11 @@ public class BookingPanell extends JPanel {
 				nGuests = Integer.parseInt(NumGuests.getText());
 				nationality = Natinoality.getText();
 				birthDate = new Date(BirthDate.getText());
+				address = Address.getText();
 				Date from = new Date(DateFrom.getText());
 				Date to = new Date(DateTo.getText());
 				
-				Guest g = new Guest(gName,"Missing",birthDate,nationality);
+				Guest g = new Guest(gName,address,birthDate,nationality);
 				Room r = db.getRoom(Integer.parseInt(table.getValueAt(table.getSelectedRow(), 0).toString().substring(12)));
 				Booking b = new Booking(from,to,g,r,nGuests);
 				
@@ -239,25 +253,64 @@ public class BookingPanell extends JPanel {
 		Clear.setBounds(620, 400, 150, 25);
 		add(Clear);
 		
-		JButton RefreshButton = new JButton("Refresh");
+		JButton RefreshButton = new JButton("Filter");
 		RefreshButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				Date from = new Date(DateFrom.getText());
-				Date to = new Date(DateTo.getText());
 				
-				ArrayList<Room> list =db.filter(bdb.dateFilter(from, to));
-				
-				Object[][] data = db.toData(list);
-				
-				tableModel = new DefaultTableModel(data,columnNames);				
-				table.setModel(tableModel);				
-				table.repaint();
+				if(!NumGuests.getText().isEmpty()){
+					
+					if(DateFrom.getText().isEmpty() || DateTo.getText().isEmpty()){
+						ArrayList<Room> list1 = db.roomFilter(Integer.parseInt(NumGuests.getText()));
+						
+						Object[][] data = db.toData(list1);
+						
+						tableModel = new DefaultTableModel(data,columnNames);				
+						table.setModel(tableModel);				
+						table.repaint();
+					}
+					else{
+						Date from = new Date(DateFrom.getText());
+						Date to = new Date(DateTo.getText());
+						
+						ArrayList<Room> list1 = db.roomFilter(Integer.parseInt(NumGuests.getText()));
+						ArrayList<Room> list2 = db.filter(bdb.dateFilter(from, to), list1);
+						
+						Object[][] data = db.toData(list2);
+						
+						tableModel = new DefaultTableModel(data,columnNames);				
+						table.setModel(tableModel);				
+						table.repaint();
+					}
+				}
+				else if(!DateFrom.getText().isEmpty() && !DateTo.getText().isEmpty()){
+					
+					Date from = new Date(DateFrom.getText());
+					Date to = new Date(DateTo.getText());
+					
+					ArrayList<Room> list =db.filter(bdb.dateFilter(from, to));
+					
+					Object[][] data = db.toData(list);
+					
+					tableModel = new DefaultTableModel(data,columnNames);				
+					table.setModel(tableModel);				
+					table.repaint();
+				}
+				else{					
+					ArrayList<Room> list =db.getAllRoom();
+					
+					Object[][] data = db.toData(list);
+					
+					tableModel = new DefaultTableModel(data,columnNames);				
+					table.setModel(tableModel);				
+					table.repaint();
+				}
 			}
 		});
 		RefreshButton.setBounds(10, 395, 150, 25);
 		add(RefreshButton);
 		
 		
+		
+		
 	}
-	
 }
