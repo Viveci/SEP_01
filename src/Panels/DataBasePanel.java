@@ -22,6 +22,7 @@ import java.awt.event.ActionEvent;
 
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import javax.swing.JSeparator;
 
 public class DataBasePanel extends JPanel {
 	
@@ -177,17 +178,21 @@ public class DataBasePanel extends JPanel {
 				FilterButton.setBounds(260, 368, 100, 25);
 				add(FilterButton);
 				
-				JButton btnNewButton = new JButton("New button");
-				btnNewButton.setBounds(370, 396, 100, 25);
-				add(btnNewButton);
+				JButton CheckoutButton = new JButton("Check out");
+				CheckoutButton.setBounds(380, 396, 100, 25);
+				add(CheckoutButton);
 				
-				JButton btnNewButton_1 = new JButton("New button");
-				btnNewButton_1.setBounds(370, 369, 100, 25);
-				add(btnNewButton_1);
+				JButton CheckinButton = new JButton("Check in");
+				CheckinButton.setBounds(380, 368, 100, 25);
+				add(CheckinButton);
 				
-				JButton btnNewButton_2 = new JButton("New button");
-				btnNewButton_2.setBounds(370, 340, 100, 25);
-				add(btnNewButton_2);
+				JButton EditButton = new JButton("Edit booking");
+				EditButton.setBounds(380, 340, 100, 25);
+				add(EditButton);
+				
+				JSeparator separator = new JSeparator();
+				separator.setBounds(375, 310, 2, 120);
+				add(separator);
 		
 	}
 	
