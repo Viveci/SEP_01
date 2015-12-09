@@ -49,9 +49,10 @@ public class BookingDB implements Serializable{
 		int counter = 0;
 		
 		for (int i = 0; i < db.size(); i++) {
-			if(to.toDays()<=db.get(i).getTo().toDays() && from.toDays() >= db.get(i).getFrom().toDays() ||
-					(to.toDays()>db.get(i).getTo().toDays() && from.toDays()>= db.get(i).getFrom().toDays()) ||
-					(from.toDays()<db.get(i).getFrom().toDays() && to.toDays() > db.get(i).getFrom().toDays())){
+			if((from.toDays()>=db.get(i).getFrom().toDays() && to.toDays()<=db.get(i).getTo().toDays()) ||
+					(from.toDays()<=db.get(i).getFrom().toDays() && to.toDays()>=db.get(i).getFrom().toDays()) ||
+					(to.toDays()>=db.get(i).getTo().toDays() && from.toDays()<=db.get(i).getTo().toDays()) ||
+					(from.toDays()<=db.get(i).getFrom().toDays() && to.toDays()>=db.get(i).getTo().toDays())){
 				counter++;
 			}
 		}
@@ -61,9 +62,10 @@ public class BookingDB implements Serializable{
 		counter=0;
 		
 		for (int i = 0; i < db.size(); i++) {
-			if(to.toDays()<=db.get(i).getTo().toDays() && from.toDays() >= db.get(i).getFrom().toDays() ||
-					(to.toDays()>db.get(i).getTo().toDays() && from.toDays()>= db.get(i).getFrom().toDays()) ||
-					(from.toDays()<db.get(i).getFrom().toDays() && to.toDays() > db.get(i).getFrom().toDays())){
+			if((from.toDays()>=db.get(i).getFrom().toDays() && to.toDays()<=db.get(i).getTo().toDays()) ||
+					(from.toDays()<=db.get(i).getFrom().toDays() && to.toDays()>=db.get(i).getFrom().toDays()) ||
+					(to.toDays()>=db.get(i).getTo().toDays() && from.toDays()<=db.get(i).getTo().toDays()) ||
+					(from.toDays()<=db.get(i).getFrom().toDays() && to.toDays()>=db.get(i).getTo().toDays())){
 				ids[counter] = db.get(i).getRoom().getNumber();
 				counter++;
 			}
@@ -129,6 +131,36 @@ public class BookingDB implements Serializable{
 	public void clear() {
 		db = new ArrayList<Booking>();
 		this.serialize();
+	}
+
+	public ArrayList<Booking> filter(String name,ArrayList<Booking> list) {
+		ArrayList<Booking> list1 = new ArrayList<>();
+		for (int i = 0; i < list.size(); i++) {
+			if(list.get(i).getBookingGuest().getName().equals(name)){
+				list1.add(list.get(i));
+			}
+		}
+		return list1;
+	}
+
+	public ArrayList<Booking> filter(int roomNumber, ArrayList<Booking> list) {
+		ArrayList<Booking> list1 = new ArrayList<>();
+		for (int i = 0; i < list.size(); i++) {
+			if(list.get(i).getRoom().getNumber()==roomNumber){
+				list1.add(list.get(i));
+			}
+		}
+		return list1;
+	}
+
+	public ArrayList<Booking> filter(Date date, ArrayList<Booking> list) {
+		ArrayList<Booking> list1 = new ArrayList<>();
+		for (int i = 0; i < list.size(); i++) {
+			if(list.get(i).getFrom().equals(date)){
+				list1.add(list.get(i));
+			}
+		}
+		return list1;
 	}
 	
 }
