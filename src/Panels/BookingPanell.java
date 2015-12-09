@@ -225,8 +225,10 @@ public class BookingPanell extends JPanel {
 				bdb.addBooking(b);
 				System.out.println(b.toString());
 				
-				ArrayList<Room> list =db.filter(bdb.dateFilter(from, to));
-				Object[][] data = db.toData(list);
+				ArrayList<Room> list1 = db.roomFilter(Integer.parseInt(NumGuests.getText()));
+				ArrayList<Room> list2 = db.filter(bdb.dateFilter(from, to), list1);
+				
+				Object[][] data = db.toData(list2);
 				
 				tableModel = new DefaultTableModel(data,columnNames);				
 				table.setModel(tableModel);				

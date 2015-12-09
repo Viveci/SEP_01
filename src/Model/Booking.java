@@ -88,7 +88,7 @@ public class Booking implements Serializable{
 	}
 	
 	public Object[] toArray(){
-		Object [] objectarr = {BookingGuest.getName(),room.getNumber() + ". " + room.toString(),from.toString(),to.toString()};
+		Object [] objectarr = {BookingGuest.getName(),"Room number " + room.getNumber(),room.toString(),from.toString(),to.toString()};
 		return  objectarr;
 	}
 	

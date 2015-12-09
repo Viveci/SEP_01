@@ -72,11 +72,11 @@ public class BookingDB implements Serializable{
 	}
 	
 	public Object[][] toData(){
-		Object[][] data = new Object[db.size()][4];
+		Object[][] data = new Object[db.size()][5];
 		
 		for(int i = 0; i< db.size();i++){
 			Object[] temp = db.get(i).toArray();
-			for(int o = 0; o< 4; o++){
+			for(int o = 0; o< 5; o++){
 				data[i][o] = temp[o];
 			}
 		}
@@ -84,11 +84,11 @@ public class BookingDB implements Serializable{
 	}
 	
 	public Object[][] toData(ArrayList<Booking> list){
-		Object[][] data = new Object[list.size()][4];
+		Object[][] data = new Object[list.size()][5];
 		
 		for(int i = 0; i< list.size();i++){
 			Object[] temp = list.get(i).toArray();
-			for(int o = 0; o< 4; o++){
+			for(int o = 0; o< 5; o++){
 				data[i][o] = temp[o];
 			}
 		}

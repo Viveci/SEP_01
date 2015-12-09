@@ -19,21 +19,21 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class ModifyPanel extends JPanel {
+public class DataBasePanel extends JPanel {
 	
 	private RoomDB db = new RoomDB();
 	private BookingDB bdb = new BookingDB();
 	
 	private JScrollPane scrollPane;
 	private DefaultTableModel tableModel;	
-	private static String[] columnNames = {"Room number",
-        "Room type",
-        "Capacity",
-        "Price"};;
+	private static String[] columnNames = {"Booking guest",
+        "Room number","Room type",
+        "Date from",
+        "Date to"};;
 
 	private static final long serialVersionUID = 1L;
 	
-	public ModifyPanel(){
+	public DataBasePanel(){
 		setLayout(null);
 		setBounds(100, 100, 800, 430);
 				
@@ -68,7 +68,7 @@ public class ModifyPanel extends JPanel {
 						
 					}
 				});
-				RefreshButton.setBounds(10, 10, 100, 25);
+				RefreshButton.setBounds(10, 359, 100, 25);
 				add(RefreshButton);
 				
 				JButton ClearDB = new JButton("Clear DB");
@@ -77,7 +77,7 @@ public class ModifyPanel extends JPanel {
 						bdb.clear();
 					}
 				});
-				ClearDB.setBounds(10, 45, 100, 25);
+				ClearDB.setBounds(10, 394, 100, 25);
 				add(ClearDB);
 		
 	}

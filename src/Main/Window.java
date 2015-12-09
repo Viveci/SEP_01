@@ -10,7 +10,7 @@ import java.awt.Font;
 
 import Panels.BookingPanell;
 import Panels.CheckoutPanel;
-import Panels.ModifyPanel;
+import Panels.DataBasePanel;
 
 public class Window extends JFrame {
 
@@ -45,20 +45,10 @@ public class Window extends JFrame {
 		JTabbedPane tabbedPane = new JTabbedPane();
 		
 		JPanel Booking = new BookingPanell();
-		JPanel Register = new JPanel();
-		JPanel Modify = new ModifyPanel();
-		JPanel CheckOut = new CheckoutPanel();
+		JPanel Database = new DataBasePanel();
 		
-		tabbedPane.add("Booking",Booking);
-		
-		
-		
-		
-		
-		
-		tabbedPane.add("Register",Register);
-		tabbedPane.add("Modify",Modify);
-		tabbedPane.add("Check Out",CheckOut);
+		tabbedPane.add("Booking",Booking);		
+		tabbedPane.add("Database",Database);
 		
 		
 		setContentPane(tabbedPane);
