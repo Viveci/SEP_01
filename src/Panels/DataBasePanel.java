@@ -51,7 +51,11 @@ public class DataBasePanel extends JPanel {
 	private JTextField DateFromText;
 	private JTextField DateToText;
 	
-	JButton CheckinButton;
+	private JButton CheckinButton;
+	private JButton CheckoutButton;
+	
+	private CheckinPanel CheckinPanel;
+	private CheckoutPanel CheckoPanel;
 	
 	private String name;
 	private int roomNumber;
@@ -95,6 +99,7 @@ public class DataBasePanel extends JPanel {
 				        if (evnt.getClickCount() == 1) {
 				        	System.out.println(table.getValueAt(table.getSelectedRow(), 0).toString());
 				        	CheckinButton.setEnabled(true);
+				        	CheckoutButton.setEnabled(true);
 				         }
 				     }
 				});
@@ -113,22 +118,6 @@ public class DataBasePanel extends JPanel {
 				ModifyPanel.setVisible(false);
 				
 		//<----------------------------Modify Panel----------------------------------------->
-				
-		//<----------------------------Checkout Panel----------------------------------------->
-				
-				CheckoutPanel CheckoPanel = new CheckoutPanel();
-				CheckoPanel.setBounds(10, 10, 770, 300);
-				add(CheckoPanel);
-				CheckoPanel.setVisible(false);				
-				
-		//<----------------------------Checkout Panel----------------------------------------->
-				
-				
-		//<----------------------------Checkin Panel----------------------------------------->
-				
-							
-				
-		//<----------------------------Checkin Panel----------------------------------------->
 				
 				
 				JButton RefreshButton = new JButton("Refresh");
@@ -244,18 +233,23 @@ public class DataBasePanel extends JPanel {
 				FilterButton.setBounds(260, 368, 100, 25);
 				add(FilterButton);
 				
-				JButton CheckoutButton = new JButton("Check out");
+				CheckoutButton = new JButton("Check out");
+				CheckoutButton.setEnabled(false);
 				CheckoutButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						
 						checkout *= -1;
 						if(checkout>0){
-							TablePanel.setVisible(true);
 							CheckoPanel.setVisible(false);
+							TablePanel.setVisible(true);
 						}
 						else{
+							Booking temp = bdb.getBooking((int)table.getValueAt(table.getSelectedRow(), 0));
+							CheckoPanel = new CheckoutPanel(temp);
+							CheckoPanel.setBounds(10, 10, 770, 300);
+							add(CheckoPanel);
 							TablePanel.setVisible(false);
-							CheckoPanel.setVisible(true);
+							CheckoPanel.setVisible(true);		
 						}
 					}
 				});
@@ -268,11 +262,13 @@ public class DataBasePanel extends JPanel {
 					public void actionPerformed(ActionEvent e) {
 						checkin *=-1;
 						if(checkin>0){
+							CheckinPanel.setVisible(false);	
 							TablePanel.setVisible(true);
+							Booking temp = null;
 						}
 						else{
 							Booking temp = bdb.getBooking((int)table.getValueAt(table.getSelectedRow(), 0));
-							CheckinPanel CheckinPanel = new CheckinPanel(temp);
+							CheckinPanel = new CheckinPanel(temp);
 							CheckinPanel.setBounds(10, 10, 770, 300);
 							add(CheckinPanel);
 							CheckinPanel.setVisible(true);	

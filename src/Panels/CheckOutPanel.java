@@ -3,21 +3,27 @@ package Panels;
 import javax.swing.JPanel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+
 import java.awt.Font;
+
 import javax.swing.JTextField;
 import javax.swing.JTextArea;
 import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
+
 import java.awt.Color;
+
 import javax.swing.JCheckBox;
+
+import Model.Booking;
 
 public class CheckoutPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
-	private JTextField textField;
+	private JTextField NameText;
 	private JTextField textField_1;
 
-	public CheckoutPanel() {
+	public CheckoutPanel(Booking b) {
 		
 		setBounds(0, 0, 770, 300);
 		setLayout(null);
@@ -32,10 +38,11 @@ public class CheckoutPanel extends JPanel {
 		label.setFont(new Font("Arial", Font.PLAIN, 14));
 		add(label);
 		
-		textField = new JTextField();
-		textField.setBounds(10, 85, 150, 20);
-		textField.setToolTipText("Name");
-		add(textField);
+		NameText = new JTextField();
+		NameText.setBounds(10, 85, 150, 20);
+		NameText.setToolTipText("Name");
+		NameText.setText(b.getBookingGuest().getName());
+		add(NameText);
 		
 		JLabel lblDepartureDate = new JLabel("Departure date");
 		lblDepartureDate.setBounds(10, 106, 150, 14);
