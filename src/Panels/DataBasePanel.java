@@ -51,6 +51,8 @@ public class DataBasePanel extends JPanel {
 	private JTextField DateFromText;
 	private JTextField DateToText;
 	
+	JButton CheckinButton;
+	
 	private String name;
 	private int roomNumber;
 	private Date from;
@@ -86,10 +88,13 @@ public class DataBasePanel extends JPanel {
 					}
 				));				
 				
+				refreshTable(data);
+				
 				table.addMouseListener(new MouseAdapter(){
 				    public void mouseClicked(MouseEvent evnt) {
 				        if (evnt.getClickCount() == 1) {
 				        	System.out.println(table.getValueAt(table.getSelectedRow(), 0).toString());
+				        	CheckinButton.setEnabled(true);
 				         }
 				     }
 				});
@@ -257,7 +262,8 @@ public class DataBasePanel extends JPanel {
 				CheckoutButton.setBounds(380, 396, 120, 25);
 				add(CheckoutButton);
 				
-				JButton CheckinButton = new JButton("Check in");
+				CheckinButton = new JButton("Check in");
+				CheckinButton.setEnabled(false);
 				CheckinButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						checkin *=-1;

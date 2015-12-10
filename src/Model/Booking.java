@@ -25,7 +25,6 @@ public class Booking implements Serializable{
 	
 	//Number of guest in that room
 	private int numGuest;
-	
 	private ArrayList<Guest> guests;
 	
 	//Booked the...
