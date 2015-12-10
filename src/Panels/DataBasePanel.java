@@ -20,6 +20,8 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.JLabel;
 import javax.swing.JTextField;
@@ -38,7 +40,7 @@ public class DataBasePanel extends JPanel {
 	private JScrollPane scrollPane;
 	private DefaultTableModel tableModel;
 	private JTable table;
-	private static String[] columnNames = {"Booking guest",
+	private static String[] columnNames = {"Id","Booking guest",
         "Room number","Room type",
         "Date from",
         "Date to"};;
@@ -55,6 +57,8 @@ public class DataBasePanel extends JPanel {
 	private Date to;
 	
 	private int checkout = 1;
+	private int edit = 1;
+	private int checkin = 1; 
 	
 	public DataBasePanel(){
 		setLayout(null);
@@ -74,21 +78,52 @@ public class DataBasePanel extends JPanel {
 				TablePanel.setBounds(10, 10, 770, 300);
 				add(TablePanel);
 				TablePanel.setLayout(null);
-				table = new JTable(tableModel);				
+				table = new JTable(new DefaultTableModel(
+					new Object[][] {
+					},
+					new String[] {
+						"Id", "Booking guest", "Room number", "Room type", "Date from", "Date to"
+					}
+				));				
+				
+				table.addMouseListener(new MouseAdapter(){
+				    public void mouseClicked(MouseEvent evnt) {
+				        if (evnt.getClickCount() == 1) {
+				        	System.out.println(table.getValueAt(table.getSelectedRow(), 0).toString());
+				         }
+				     }
+				});
+				
 				scrollPane = new JScrollPane(table);
 				scrollPane.setBounds(0, 0, 770, 300);
 				TablePanel.add(scrollPane);
 				table.setFillsViewportHeight(true);
 		//<----------------------------Table Panel----------------------------------------->
 				
-		//<----------------------------Table Panel----------------------------------------->
+		//<----------------------------Modify Panel----------------------------------------->
 				
-				CheckoutPanel checkoutpanel = new CheckoutPanel();
-				checkoutpanel.setBounds(10, 10, 770, 300);
-				add(checkoutpanel);
-				checkoutpanel.setVisible(false);
+				ModifyPanel ModifyPanel = new ModifyPanel();
+				ModifyPanel.setBounds(10, 10, 770, 300);
+				add(ModifyPanel);
+				ModifyPanel.setVisible(false);
 				
-		//<----------------------------Table Panel----------------------------------------->
+		//<----------------------------Modify Panel----------------------------------------->
+				
+		//<----------------------------Checkout Panel----------------------------------------->
+				
+				CheckoutPanel CheckoPanel = new CheckoutPanel();
+				CheckoPanel.setBounds(10, 10, 770, 300);
+				add(CheckoPanel);
+				CheckoPanel.setVisible(false);				
+				
+		//<----------------------------Checkout Panel----------------------------------------->
+				
+				
+		//<----------------------------Checkin Panel----------------------------------------->
+				
+							
+				
+		//<----------------------------Checkin Panel----------------------------------------->
 				
 				
 				JButton RefreshButton = new JButton("Refresh");
@@ -169,6 +204,9 @@ public class DataBasePanel extends JPanel {
 						DateToText.setText("");
 						RoomNumText.setText("");
 						NameText.setText("");
+						ArrayList <Booking> list = bdb.deserialize();
+						Object[][] data = bdb.toData(list);
+						refreshTable(data);
 					}
 				});
 				ClearFilterButton.setBounds(260, 395, 100, 25);
@@ -208,11 +246,11 @@ public class DataBasePanel extends JPanel {
 						checkout *= -1;
 						if(checkout>0){
 							TablePanel.setVisible(true);
-							checkoutpanel.setVisible(false);
+							CheckoPanel.setVisible(false);
 						}
 						else{
 							TablePanel.setVisible(false);
-							checkoutpanel.setVisible(true);
+							CheckoPanel.setVisible(true);
 						}
 					}
 				});
@@ -222,6 +260,18 @@ public class DataBasePanel extends JPanel {
 				JButton CheckinButton = new JButton("Check in");
 				CheckinButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
+						checkin *=-1;
+						if(checkin>0){
+							TablePanel.setVisible(true);
+						}
+						else{
+							Booking temp = bdb.getBooking((int)table.getValueAt(table.getSelectedRow(), 0));
+							CheckinPanel CheckinPanel = new CheckinPanel(temp);
+							CheckinPanel.setBounds(10, 10, 770, 300);
+							add(CheckinPanel);
+							CheckinPanel.setVisible(true);	
+							TablePanel.setVisible(false);
+						}
 					}
 				});
 				CheckinButton.setBounds(380, 368, 120, 25);
@@ -230,6 +280,15 @@ public class DataBasePanel extends JPanel {
 				JButton EditButton = new JButton("Edit booking");
 				EditButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
+						edit *=-1;
+						if(edit>0){
+							TablePanel.setVisible(true);
+							ModifyPanel.setVisible(false);
+						}
+						else{
+							TablePanel.setVisible(false);
+							ModifyPanel.setVisible(true);
+						}
 					}
 				});
 				EditButton.setBounds(380, 340, 120, 25);
@@ -240,11 +299,15 @@ public class DataBasePanel extends JPanel {
 				separator.setBackground(Color.LIGHT_GRAY);
 				separator.setBounds(370, 310, 2, 120);
 				add(separator);
+				
+				JSeparator separator_1 = new JSeparator();
+				separator_1.setBounds(0, 310, 800, 4);
+				add(separator_1);
 		
 	}
 	
 	private void refreshTable(Object[][] data) {
-		tableModel = new DefaultTableModel(data,columnNames);						
+		tableModel = new DefaultTableModel(data,columnNames);	
 		table.setModel(tableModel);						
 		table.repaint();						
 	}

@@ -42,6 +42,14 @@ public class BookingDB implements Serializable{
 		return b;
 	}
 
+	public void setBooking(Booking b){
+		for (int i = 0; i < db.size(); i++) {
+			if(db.get(i).getId()==b.getId()){
+				db.remove(i);
+				db.add(b);
+			} 
+		}
+	}
 	/**
 	 * This method is used to find which apartments are available on a certain time period.
 	 * @return Returns an Integer array, filled with the taken room's numbers*/
@@ -74,7 +82,7 @@ public class BookingDB implements Serializable{
 	}
 	
 	public Object[][] toData(){
-		Object[][] data = new Object[db.size()][5];
+		Object[][] data = new Object[db.size()][6];
 		
 		for(int i = 0; i< db.size();i++){
 			Object[] temp = db.get(i).toArray();
@@ -86,7 +94,7 @@ public class BookingDB implements Serializable{
 	}
 	
 	public Object[][] toData(ArrayList<Booking> list){
-		Object[][] data = new Object[list.size()][5];
+		Object[][] data = new Object[list.size()][6];
 		
 		for(int i = 0; i< list.size();i++){
 			Object[] temp = list.get(i).toArray();
@@ -142,7 +150,6 @@ public class BookingDB implements Serializable{
 		}
 		return list1;
 	}
-
 	public ArrayList<Booking> filter(int roomNumber, ArrayList<Booking> list) {
 		ArrayList<Booking> list1 = new ArrayList<>();
 		for (int i = 0; i < list.size(); i++) {
@@ -152,7 +159,6 @@ public class BookingDB implements Serializable{
 		}
 		return list1;
 	}
-
 	public ArrayList<Booking> filterf(Date date, ArrayList<Booking> list) {
 		ArrayList<Booking> list1 = new ArrayList<>();
 		for (int i = 0; i < list.size(); i++) {

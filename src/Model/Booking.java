@@ -1,6 +1,7 @@
 package Model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  * This class stores all the data for a booking
@@ -21,11 +22,17 @@ public class Booking implements Serializable{
 	
 	//Booked by...
 	private Guest BookingGuest;
+	
 	//Number of guest in that room
 	private int numGuest;
 	
+	private ArrayList<Guest> guests;
+	
 	//Booked the...
 	private Room room;
+	
+	//Extras
+	private Extras extras;
 	
 	private int id;
 	
@@ -36,14 +43,18 @@ public class Booking implements Serializable{
 		this.room = room;
 		this.numGuest = numGuest;
 		period =this.from.diff(this.to);
+		this.extras = null;
+		this.guests = new ArrayList<>();
+		this.guests.add(BookingGuest);
 	}
-	
 	public Booking(){
 		this.from = null;
 		this.to = null;
 		this.BookingGuest = null;
 		this.numGuest = 0;
 		this.room = null;
+		this.extras = null;
+		this.guests = new ArrayList<>();
 	}
 
 	//Setters and Getters
@@ -86,10 +97,24 @@ public class Booking implements Serializable{
 	public int getPeriod(){
 		return period;
 	}
+	public ArrayList<Guest> getGuests(){
+		return this.guests;
+	}
+	public void setGuests(ArrayList<Guest> list){
+		this.guests = list;
+	} 
+	
+	
 	
 	public Object[] toArray(){
-		Object [] objectarr = {BookingGuest.getName(),"Room number " + room.getNumber(),room.toString(),from.toString(),to.toString()};
+		Object [] objectarr = {this.id,BookingGuest.getName(),"Room number " + room.getNumber(),room.toString(),from.toString(),to.toString()};
 		return  objectarr;
+	}
+	public Extras getExtras() {
+		return extras;
+	}
+	public void setExtras(Extras extras) {
+		this.extras = extras;
 	}
 	
 }

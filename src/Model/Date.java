@@ -82,7 +82,9 @@ public class Date implements Serializable{
 	public void setIsleap(boolean isleap) {
 		this.isleap = isleap;
 	}
-	
+	public int[] getmonths(){
+		return this.months;
+	}
 	//self-explanatory 
 	public String toString(){
 		return day+"/"+month+"/"+year;
@@ -96,12 +98,20 @@ public class Date implements Serializable{
 	/**
 	 * @return Returns how many days passed in a year*/
 	public int toDays(){
+		int sumyears = 0;
+		for(int o = 1; o < this.year; o++){
+			for(int i = 0; i < 12; i++){
+				Date n = new Date(1,1,o);
+				sumyears += n.getmonths()[i];
+			}
+		}		
 		int toDay = 0, sumMonth = 0;
 		toDay += this.day;
 		for(int i = 0; i < this.month-1; i++){
 			sumMonth += months[i];
 		}
 		toDay += sumMonth;
+		toDay += sumyears;
 		return toDay;
 	}
 	
