@@ -5,11 +5,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.text.DateFormat;
+import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import javafx.scene.shape.CullFace;
 
 import javax.swing.JButton;
+import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
@@ -23,6 +27,7 @@ import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
+import javax.swing.text.NumberFormatter;
 
 import sun.text.normalizer.CharTrie.FriendAgent;
 import DataBase.BookingDB;
@@ -34,11 +39,12 @@ import Model.Room;
 
 public class BookingPanell extends JPanel {
 	
-	private RoomDB db = new RoomDB();
-	private BookingDB bdb = new BookingDB();
+	private RoomDB db;
+	private BookingDB bdb;
 	private JTextField FirstName;
 	private JTextField NumGuests;
 	private JTextField Natinoality;
+	private JTextField Address;
 	private JTextField BirthDate;
 	private JTextField DateFrom;
 	private JTextField DateTo;
@@ -53,7 +59,10 @@ public class BookingPanell extends JPanel {
 	private Room room;
 	private String address;
 	
-	private int[] inputs = new int[7]; 
+	private DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+	
+	//Save booking enabled variables
+	private int[] inputs = new int[8]; 
 	private Boolean global;
 	
 	private DefaultTableModel tableModel;
@@ -65,7 +74,6 @@ public class BookingPanell extends JPanel {
 	
 
 	private static final long serialVersionUID = 1L;
-	private JTextField Address;
 
 	public BookingPanell(){
 		
@@ -80,6 +88,8 @@ public class BookingPanell extends JPanel {
 		birthDate = new Date();	
 		room = new Room();
 		
+		db = new RoomDB();
+		bdb = new BookingDB();	
 		
 		
 		//Jlabel Guest
@@ -188,7 +198,14 @@ public class BookingPanell extends JPanel {
 	    });
 		
 		//JTextField Number of guests
-		NumGuests = new JTextField();
+		NumberFormat format = NumberFormat.getInstance();
+	    NumberFormatter formatter = new NumberFormatter(format);
+	    formatter.setValueClass(Integer.class);
+	    formatter.setMinimum(0);
+	    formatter.setMaximum(Integer.MAX_VALUE);
+	   
+
+		NumGuests = new JFormattedTextField(formatter);
 		NumGuests.setToolTipText("Number of guests");
 		NumGuests.setBounds(10, 370, 150, 20);
 		add(NumGuests);
@@ -256,7 +273,7 @@ public class BookingPanell extends JPanel {
 	    });
 				
 		//JTextField NATIONALITY
-		BirthDate = new JTextField();
+		BirthDate = new JFormattedTextField(dateFormat);
 		BirthDate.setToolTipText("BirthDate");
 		BirthDate.setBounds(10, 195, 150, 20);
 		add(BirthDate);
@@ -322,8 +339,8 @@ public class BookingPanell extends JPanel {
 	        	SaveBooking.setEnabled(global);
 	        }
 	    });
-		
-		DateFrom = new JTextField();
+				
+		DateFrom = new JFormattedTextField(dateFormat);
 		DateFrom.setToolTipText("From");
 		DateFrom.setBounds(10, 280, 150, 20);
 		add(DateFrom);
@@ -338,7 +355,6 @@ public class BookingPanell extends JPanel {
 	        		inputs[5] = 0;
 	        	}
 	        	
-
 	        	Boolean all = true;
 	        	for(int i = 0; i < inputs.length; i++){
 	        		if(inputs[i]==0){
@@ -353,10 +369,12 @@ public class BookingPanell extends JPanel {
 	        		global = false;
 	        	}
 	        	SaveBooking.setEnabled(global);
+	        	
+	        	
 	        }
 	    });
 		
-		DateTo = new JTextField();
+		DateTo = new JFormattedTextField(dateFormat);
 		DateTo.setToolTipText("To");
 		DateTo.setBounds(10, 325, 150, 20);
 		add(DateTo);
@@ -406,7 +424,11 @@ public class BookingPanell extends JPanel {
 		    public void mouseClicked(MouseEvent evnt) {
 		        if (evnt.getClickCount() == 1) {
 		        	System.out.println(table.getValueAt(table.getSelectedRow(), 0).toString());
+		        	inputs[7]=1;
 		         }
+		        else{
+		        	inputs[7]=0;
+		        }
 		     }
 		});
 		
@@ -448,7 +470,13 @@ public class BookingPanell extends JPanel {
 		JButton Clear = new JButton("Clear all");
 		Clear.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				FirstName.setText("");
+				NumGuests.setText("");
+				Address.setText("");
+				Natinoality.setText("");
+				BirthDate.setText("");
+				DateFrom.setText("");
+				DateTo.setText("");
 			}
 		});
 		Clear.setBounds(620, 400, 150, 25);

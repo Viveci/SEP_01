@@ -19,11 +19,15 @@ public class BookingDB implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	private ArrayList<Booking> db;
-	private static int id;
+	private int id;
 	
 	public BookingDB(){
 		this.db = this.deserialize();
-		id = 1;
+		try{
+		id = db.get(db.size()-1).getId()+1;}
+		catch (ArrayIndexOutOfBoundsException e){
+			id =1;
+		}
 	}
 	
 	public void addBooking(Booking b){
@@ -86,7 +90,7 @@ public class BookingDB implements Serializable{
 		
 		for(int i = 0; i< db.size();i++){
 			Object[] temp = db.get(i).toArray();
-			for(int o = 0; o< 5; o++){
+			for(int o = 0; o< 6; o++){
 				data[i][o] = temp[o];
 			}
 		}
@@ -98,7 +102,7 @@ public class BookingDB implements Serializable{
 		
 		for(int i = 0; i< list.size();i++){
 			Object[] temp = list.get(i).toArray();
-			for(int o = 0; o< 5; o++){
+			for(int o = 0; o< 6; o++){
 				data[i][o] = temp[o];
 			}
 		}
