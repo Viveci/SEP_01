@@ -201,8 +201,8 @@ public class BookingPanell extends JPanel {
 		NumberFormat format = NumberFormat.getInstance();
 	    NumberFormatter formatter = new NumberFormatter(format);
 	    formatter.setValueClass(Integer.class);
-	    formatter.setMinimum(0);
-	    formatter.setMaximum(Integer.MAX_VALUE);
+	    formatter.setMinimum(1);
+	    formatter.setMaximum(3);
 	   
 
 		NumGuests = new JFormattedTextField(formatter);
@@ -477,6 +477,11 @@ public class BookingPanell extends JPanel {
 				BirthDate.setText("");
 				DateFrom.setText("");
 				DateTo.setText("");
+				ArrayList<Room> list = db.getAllRoom();
+				Object[][] data = db.toData(list);
+				
+				tableModel = new DefaultTableModel(data,columnNames);
+				table.setModel(tableModel);
 			}
 		});
 		Clear.setBounds(620, 400, 150, 25);

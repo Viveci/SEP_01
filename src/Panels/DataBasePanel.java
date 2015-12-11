@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import javafx.scene.control.TextFormatter;
 
+import javax.swing.JDialog;
 import javax.swing.JFormattedTextField;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -160,10 +161,14 @@ public class DataBasePanel extends JPanel {
 			JButton ClearDB = new JButton("Clear DB");
 			ClearDB.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					String result = JOptionPane.showInputDialog("Do you really want to delete the Database?");
-					if(result.equalsIgnoreCase("delete")){
-					bdb.clear();
-					}
+					 JDialog.setDefaultLookAndFeelDecorated(true);
+					    int response = JOptionPane.showConfirmDialog(null, "Do you want to continue?", "Confirm",
+					        JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+					    if (response == JOptionPane.NO_OPTION) {
+					    } else if (response == JOptionPane.YES_OPTION) {
+					      bdb.clear();
+					    } else if (response == JOptionPane.CLOSED_OPTION) {
+					    }
 				}
 			});
 			ClearDB.setBounds(680, 395, 100, 25);

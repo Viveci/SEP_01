@@ -12,9 +12,12 @@ import javax.swing.JSeparator;
 import javax.swing.SwingConstants;
 
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JCheckBox;
 
+import DataBase.BookingDB;
 import Model.Booking;
 
 public class CheckoutPanel extends JPanel {
@@ -22,14 +25,26 @@ public class CheckoutPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private JTextField NameText;
 	private JTextField textField_1;
+	
+	private int roomdefault;
+	private int cig = 0;
+	private int extrabed = 0;
+	private int laundry = 0;
+	private int service = 0;
+	private int total = 0; 
+	
+	private BookingDB bdb = new BookingDB();
 
 	public CheckoutPanel(Booking b) {
 		
 		setBounds(0, 0, 770, 300);
 		setLayout(null);
 		
+		roomdefault = b.getRoom().getPrice()*b.getPeriod();
+		total = roomdefault+service+cig+extrabed+laundry;
+		
 		JLabel lblCheckout = new JLabel("Check-out");
-		lblCheckout.setBounds(0, 0, 140, 32);
+		lblCheckout.setBounds(0, 0, 140, 18);
 		lblCheckout.setFont(new Font("Arial", Font.BOLD, 16));
 		add(lblCheckout);
 		
@@ -52,26 +67,38 @@ public class CheckoutPanel extends JPanel {
 		textField_1 = new JTextField();
 		textField_1.setBounds(10, 121, 150, 20);
 		textField_1.setToolTipText("To");
+		textField_1.setText(b.getTo().toString());
 		add(textField_1);
 		
 		JButton btnCheckout = new JButton("Check-out");
 		btnCheckout.setBounds(608, 262, 150, 25);
+		btnCheckout.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				bdb.deleteBooking(b.getId());
+				bdb.serialize();
+			}
+		});
 		add(btnCheckout);
 		
-		JTextArea txtrPrice = new JTextArea();
+		JTextField txtrPrice = new JTextField();
 		txtrPrice.setBounds(608, 85, 150, 20);
 		txtrPrice.setForeground(Color.RED);
+		txtrPrice.setText(roomdefault+service+cig+extrabed+laundry+" Euro");
 		txtrPrice.setFont(new Font("Arial", Font.BOLD, 14));
+		
 		add(txtrPrice);
 		
 		JLabel lblPrice = new JLabel("Total:");
-		lblPrice.setBounds(608, 39, 56, 16);
+		lblPrice.setBounds(608, 35, 56, 16);
 		lblPrice.setFont(new Font("Arial", Font.ITALIC, 14));
 		add(lblPrice);
 		
-		JTextArea textArea = new JTextArea();
-		textArea.setBounds(172, 85, 150, 20);
-		add(textArea);
+		JTextField RoomType = new JTextField();
+		RoomType.setBounds(172, 85, 150, 20);
+		RoomType.setText(b.getRoom().getType());
+		add(RoomType);
 		
 		JLabel lblRoomType = new JLabel("Room type");
 		lblRoomType.setBounds(172, 70, 150, 14);
@@ -79,22 +106,23 @@ public class CheckoutPanel extends JPanel {
 		add(lblRoomType);
 		
 		JLabel lblGuestInformation = new JLabel("Guest information");
-		lblGuestInformation.setBounds(10, 37, 150, 20);
+		lblGuestInformation.setBounds(10, 35, 150, 20);
 		lblGuestInformation.setFont(new Font("Arial", Font.ITALIC, 14));
 		add(lblGuestInformation);
 		
 		JLabel lblExpenses = new JLabel("Booking information");
-		lblExpenses.setBounds(172, 37, 150, 20);
+		lblExpenses.setBounds(172, 35, 150, 20);
 		lblExpenses.setFont(new Font("Arial", Font.ITALIC, 14));
 		add(lblExpenses);
 		
 		JLabel lblNightsSpent = new JLabel("Nights spent");
-		lblNightsSpent.setBounds(172, 106, 150, 14);
+		lblNightsSpent.setBounds(172, 106, 150, 16);
 		lblNightsSpent.setFont(new Font("Arial", Font.PLAIN, 14));
 		add(lblNightsSpent);
 		
-		JTextArea textArea_1 = new JTextArea();
+		JTextField textArea_1 = new JTextField();;
 		textArea_1.setBounds(174, 125, 150, 20);
+		textArea_1.setText((b.getPeriod())+" nights");
 		add(textArea_1);
 		
 		JCheckBox checkBox = new JCheckBox("Room service");
@@ -123,32 +151,62 @@ public class CheckoutPanel extends JPanel {
 		add(lblExtras);
 		
 		JLabel lblPrices = new JLabel("Prices");
-		lblPrices.setBounds(375, 37, 150, 20);
+		lblPrices.setBounds(375, 35, 150, 20);
 		lblPrices.setFont(new Font("Arial", Font.ITALIC, 14));
 		add(lblPrices);
 		
-		JTextArea textArea_2 = new JTextArea();
+		JTextField textArea_2 = new JTextField();
 		textArea_2.setBounds(375, 85, 150, 20);
+		textArea_2.setText(b.getRoom().getPrice()+" Euro");
 		add(textArea_2);
 		
-		JTextArea textArea_3 = new JTextArea();
+		JTextField textArea_3 = new JTextField();
 		textArea_3.setBounds(375, 125, 150, 20);
+		textArea_3.setText(roomdefault+" Euro");
 		add(textArea_3);
 		
-		JTextArea textArea_4 = new JTextArea();
+		JTextField textArea_4 = new JTextField();
 		textArea_4.setBounds(375, 184, 150, 20);
+		if(b.getExtras()!=null){
+			textArea_4.setText("20 Euro");
+			service = 20;
+		}
+		else{
+			textArea_4.setText("-");
+		}
 		add(textArea_4);
 		
-		JTextArea textArea_5 = new JTextArea();
+		JTextField textArea_5 = new JTextField();
 		textArea_5.setBounds(375, 211, 150, 20);
+		if(b.getExtras()!=null){
+			textArea_5.setText("20 Euro");
+			laundry = 20;
+		}
+		else{
+			textArea_5.setText("-");
+		}
 		add(textArea_5);
 		
-		JTextArea textArea_6 = new JTextArea();
+		JTextField textArea_6 = new JTextField();
 		textArea_6.setBounds(375, 238, 150, 20);
+		if(b.getExtras()!=null){
+			textArea_6.setText("20 Euro");
+			extrabed = 20;
+		}
+		else{
+			textArea_6.setText("-");
+		}
 		add(textArea_6);
 		
-		JTextArea textArea_7 = new JTextArea();
+		JTextField textArea_7 = new JTextField();
 		textArea_7.setBounds(375, 265, 150, 20);
+		if(b.getExtras()!=null){
+			textArea_7.setText("20 Euro");
+			laundry = 20;
+		}
+		else{
+			textArea_7.setText("-");
+		}
 		add(textArea_7);
 		
 		JSeparator separator = new JSeparator();
@@ -174,15 +232,6 @@ public class CheckoutPanel extends JPanel {
 		JSeparator separator_5 = new JSeparator();
 		separator_5.setBounds(262, 275, 101, 2);
 		add(separator_5);
-		
-		JSeparator separator_6 = new JSeparator();
-		separator_6.setBounds(0, 56, 770, 2);
-		add(separator_6);
-		
-		JSeparator separator_7 = new JSeparator();
-		separator_7.setBounds(571, 56, 2, 244);
-		separator_7.setOrientation(SwingConstants.VERTICAL);
-		add(separator_7);
 
 	}
 }

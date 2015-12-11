@@ -182,4 +182,12 @@ public class BookingDB implements Serializable{
 		return list1;
 	}
 	
+	public void deleteBooking(int id){
+		for (int i = 0; i < db.size(); i++) {
+			if(id==db.get(i).getId()){
+				db.remove(i);
+			}
+		}
+	}
+	
 }
