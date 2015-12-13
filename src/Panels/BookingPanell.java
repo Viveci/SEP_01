@@ -422,7 +422,7 @@ public class BookingPanell extends JPanel {
 		
 		table.addMouseListener(new MouseAdapter(){
 		    public void mouseClicked(MouseEvent evnt) {
-		        if (evnt.getClickCount() == 1) {
+		        if (table.getSelectedRow() != -1) {
 		        	System.out.println(table.getValueAt(table.getSelectedRow(), 0).toString());
 		        	inputs[7]=1;
 		         }

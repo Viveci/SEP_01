@@ -26,9 +26,7 @@ public class Extras implements Serializable{
 		this.roomService = roomService;
 		this.laundry = laundry;
 	}	
-	
-	
-	
+		
 	public Boolean getSmoking() {
 		return smoking;
 	}

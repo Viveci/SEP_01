@@ -42,7 +42,9 @@ public class Date implements Serializable{
 			months = new int[]{31,28,31,30,31,30,31,31,30,31,30,31};
 			}
 	}
+	
 	public Date(String s){
+		if(!s.equals("")){
 		String [] split = s.split("/");
 		this.day = Integer.parseInt(split[0]);
 		this.month = Integer.parseInt(split[1]);
@@ -55,6 +57,12 @@ public class Date implements Serializable{
 			this.isleap = false;
 			months = new int[]{31,28,31,30,31,30,31,31,30,31,30,31};
 			}
+		}
+		else{
+			day = -1;
+			month = -1;
+			year = -1;
+		}
 	}
 	
 	//Setters and Getters

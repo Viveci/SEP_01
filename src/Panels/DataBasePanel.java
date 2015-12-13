@@ -64,6 +64,11 @@ public class DataBasePanel extends JPanel {
 	private JButton CheckoutButton;
 	private JButton EditButton;
 	
+	private JButton RefreshButton;
+	private JButton ClearDB;
+	private JButton ClearFilterButton;
+	private JButton FilterButton;
+	
 	private CheckinPanel CheckinPanel;
 	private CheckoutPanel CheckoPanel;
 	private ModifyPanel ModifyPanel;
@@ -120,12 +125,12 @@ public class DataBasePanel extends JPanel {
 				
 				table.addMouseListener(new MouseAdapter(){
 				    public void mouseClicked(MouseEvent evnt) {
-				        if (evnt.getClickCount() == 1) {
+				        if (table.getSelectedRow() != -1) {
 				        	System.out.println(table.getValueAt(table.getSelectedRow(), 0).toString());
 				        	CheckinButton.setEnabled(true);
 				        	CheckoutButton.setEnabled(true);
 				        	EditButton.setEnabled(true);
-				         }
+				        }
 				        else{
 				        	CheckinButton.setEnabled(false);
 				        	CheckoutButton.setEnabled(false);
@@ -140,7 +145,7 @@ public class DataBasePanel extends JPanel {
 				table.setFillsViewportHeight(true);
 		//<----------------------------Table Panel----------------------------------------->				
 				
-			JButton RefreshButton = new JButton("Refresh");
+			RefreshButton = new JButton("Refresh");
 			RefreshButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					
@@ -158,7 +163,7 @@ public class DataBasePanel extends JPanel {
 			RefreshButton.setBounds(680, 368, 100, 25);
 			add(RefreshButton);
 			
-			JButton ClearDB = new JButton("Clear DB");
+			ClearDB = new JButton("Clear DB");
 			ClearDB.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					 JDialog.setDefaultLookAndFeelDecorated(true);
@@ -225,7 +230,7 @@ public class DataBasePanel extends JPanel {
 			DateToLAbel.setBounds(10, 404, 80, 14);
 			add(DateToLAbel);
 			
-			JButton ClearFilterButton = new JButton("Clear Filter");
+			ClearFilterButton = new JButton("Clear Filter");
 			ClearFilterButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					DateFromText.setText("");
@@ -240,7 +245,7 @@ public class DataBasePanel extends JPanel {
 			ClearFilterButton.setBounds(260, 395, 100, 25);
 			add(ClearFilterButton);
 			
-			JButton FilterButton = new JButton("Filter");
+			FilterButton = new JButton("Filter");
 			FilterButton.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					ArrayList <Booking> list = bdb.deserialize();
@@ -274,8 +279,15 @@ public class DataBasePanel extends JPanel {
 					
 					checkout *= -1;
 					if(checkout>0){
+						bdb = new BookingDB();
+						
+						ArrayList<Booking> list = bdb.deserialize();						
+						Object[][] data = bdb.toData(list);
+						
+						refreshTable(data);
 						CheckoPanel.setVisible(false);
 						TablePanel.setVisible(true);
+						setButtons(true);
 					}
 					else{
 						Booking temp = bdb.getBooking((int)table.getValueAt(table.getSelectedRow(), 0));
@@ -283,7 +295,8 @@ public class DataBasePanel extends JPanel {
 						CheckoPanel.setBounds(10, 10, 770, 300);
 						add(CheckoPanel);
 						TablePanel.setVisible(false);
-						CheckoPanel.setVisible(true);		
+						CheckoPanel.setVisible(true);	
+						setButtons(false);
 					}
 					if (checkin<0) {
 						checkin*=-1;
@@ -304,9 +317,16 @@ public class DataBasePanel extends JPanel {
 				public void actionPerformed(ActionEvent e) {
 					checkin *=-1;
 					if(checkin>0){
+						bdb = new BookingDB();
+						
+						ArrayList<Booking> list = bdb.deserialize();						
+						Object[][] data = bdb.toData(list);
+						
+						refreshTable(data);
 						CheckinPanel.setVisible(false);	
 						TablePanel.setVisible(true);
 						Booking temp = null;
+						setButtons(true);
 					}
 					else{
 						Booking temp = bdb.getBooking((int)table.getValueAt(table.getSelectedRow(), 0));
@@ -315,6 +335,7 @@ public class DataBasePanel extends JPanel {
 						add(CheckinPanel);
 						CheckinPanel.setVisible(true);	
 						TablePanel.setVisible(false);
+						setButtons(false);
 					}
 					if (edit<0) {
 						edit*=-1;
@@ -337,8 +358,15 @@ public class DataBasePanel extends JPanel {
 					edit *=-1;
 					
 					if(edit>0){
+						bdb = new BookingDB();
+						
+						ArrayList<Booking> list = bdb.deserialize();						
+						Object[][] data = bdb.toData(list);
+						
+						refreshTable(data);
 						TablePanel.setVisible(true);
 						ModifyPanel.setVisible(false);
+						setButtons(true);
 					}
 					else{
 						Booking temp = bdb.getBooking((int)table.getValueAt(table.getSelectedRow(), 0));
@@ -347,6 +375,7 @@ public class DataBasePanel extends JPanel {
 						add(ModifyPanel);
 						TablePanel.setVisible(false);
 						ModifyPanel.setVisible(true);
+						setButtons(false);
 					}
 					if (checkin<0) {
 						checkin*=-1;
@@ -371,6 +400,13 @@ public class DataBasePanel extends JPanel {
 			separator_1.setBounds(0, 310, 800, 4);
 			add(separator_1);
 		
+	}
+	
+	private void setButtons(Boolean b){
+		RefreshButton.setEnabled(b);
+		ClearDB.setEnabled(b);
+		ClearFilterButton.setEnabled(b);
+		FilterButton.setEnabled(b);
 	}
 	
 	private void refreshTable(Object[][] data) {

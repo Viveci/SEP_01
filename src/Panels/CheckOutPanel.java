@@ -6,6 +6,9 @@ import javax.swing.JLabel;
 
 import java.awt.Font;
 
+import javax.swing.JFormattedTextField;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JTextArea;
 import javax.swing.JSeparator;
@@ -14,8 +17,12 @@ import javax.swing.SwingConstants;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.NumberFormat;
 
 import javax.swing.JCheckBox;
+import javax.swing.event.CaretEvent;
+import javax.swing.event.CaretListener;
+import javax.swing.text.NumberFormatter;
 
 import DataBase.BookingDB;
 import Model.Booking;
@@ -78,6 +85,8 @@ public class CheckoutPanel extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				bdb.deleteBooking(b.getId());
 				bdb.serialize();
+				JFrame parent = new JFrame();
+				JOptionPane.showMessageDialog(parent, "Checkout is complete\nBooking is deleted from database");
 			}
 		});
 		add(btnCheckout);
@@ -128,21 +137,25 @@ public class CheckoutPanel extends JPanel {
 		JCheckBox checkBox = new JCheckBox("Room service");
 		checkBox.setBounds(172, 184, 120, 22);
 		checkBox.setFont(new Font("Arial", Font.PLAIN, 14));
+		checkBox.setSelected(b.getExtras().getRoomService());
 		add(checkBox);
 		
 		JCheckBox checkBox_1 = new JCheckBox("Laundry");
 		checkBox_1.setBounds(172, 211, 88, 22);
 		checkBox_1.setFont(new Font("Arial", Font.PLAIN, 14));
+		checkBox_1.setSelected(b.getExtras().getaundry());
 		add(checkBox_1);
 		
 		JCheckBox checkBox_2 = new JCheckBox("Extra bed");
 		checkBox_2.setBounds(172, 238, 88, 22);
 		checkBox_2.setFont(new Font("Arial", Font.PLAIN, 14));
+		checkBox_2.setSelected(b.getExtras().getExtraBed());
 		add(checkBox_2);
 		
 		JCheckBox checkBox_3 = new JCheckBox("Smoking");
 		checkBox_3.setBounds(172, 265, 88, 22);
 		checkBox_3.setFont(new Font("Arial", Font.PLAIN, 14));
+		checkBox_3.setSelected(b.getExtras().getSmoking());
 		add(checkBox_3);
 		
 		JLabel lblExtras = new JLabel("Extra services");
@@ -165,49 +178,103 @@ public class CheckoutPanel extends JPanel {
 		textArea_3.setText(roomdefault+" Euro");
 		add(textArea_3);
 		
-		JTextField textArea_4 = new JTextField();
+		NumberFormat format = NumberFormat.getInstance();
+		NumberFormatter formatter = new NumberFormatter(format);
+	    formatter.setValueClass(Integer.class);
+	    formatter.setMinimum(0);
+	    formatter.setMaximum(1000);
+	    
+		JTextField textArea_4 = new JFormattedTextField(formatter);
 		textArea_4.setBounds(375, 184, 150, 20);
-		if(b.getExtras()!=null){
-			textArea_4.setText("20 Euro");
+		if(b.getExtras().getRoomService()){
 			service = 20;
+			textArea_4.setText(service+"");
+			
 		}
 		else{
-			textArea_4.setText("-");
+			textArea_4.setText("");
 		}
 		add(textArea_4);
+		textArea_4.addCaretListener(new CaretListener() {
+			
+			@Override
+			public void caretUpdate(CaretEvent e) {
+				if(!textArea_4.getText().isEmpty()){
+				service = Integer.parseInt(textArea_4.getText());
+				total = roomdefault+service+cig+extrabed+laundry;
+				txtrPrice.setText(total+" Euro");
+				}
+			}
+		});
 		
-		JTextField textArea_5 = new JTextField();
+		JTextField textArea_5 = new JFormattedTextField(formatter);
 		textArea_5.setBounds(375, 211, 150, 20);
-		if(b.getExtras()!=null){
-			textArea_5.setText("20 Euro");
+		if(b.getExtras().getaundry()){
 			laundry = 20;
+			textArea_5.setText(laundry+"");
 		}
 		else{
-			textArea_5.setText("-");
+			textArea_5.setText("");
 		}
 		add(textArea_5);
 		
-		JTextField textArea_6 = new JTextField();
+		textArea_5.addCaretListener(new CaretListener() {
+			
+			@Override
+			public void caretUpdate(CaretEvent e) {
+				if(!textArea_5.getText().isEmpty()){
+				laundry = Integer.parseInt(textArea_5.getText());
+				total = roomdefault+service+cig+extrabed+laundry;
+				txtrPrice.setText(total+" Euro");
+				}
+			}
+		});
+		
+		JTextField textArea_6 = new JFormattedTextField(formatter);
 		textArea_6.setBounds(375, 238, 150, 20);
-		if(b.getExtras()!=null){
-			textArea_6.setText("20 Euro");
+		if(b.getExtras().getExtraBed()){
 			extrabed = 20;
+			textArea_6.setText(extrabed+"");
 		}
 		else{
-			textArea_6.setText("-");
+			textArea_6.setText("");
 		}
 		add(textArea_6);
 		
-		JTextField textArea_7 = new JTextField();
+		textArea_6.addCaretListener(new CaretListener() {
+			
+			@Override
+			public void caretUpdate(CaretEvent e) {
+				if(!textArea_6.getText().isEmpty()){
+				extrabed = Integer.parseInt(textArea_6.getText());
+				total = roomdefault+service+cig+extrabed+laundry;
+				txtrPrice.setText(total+" Euro");
+				}
+			}
+		});
+		
+		JTextField textArea_7 = new JFormattedTextField(formatter);
 		textArea_7.setBounds(375, 265, 150, 20);
-		if(b.getExtras()!=null){
-			textArea_7.setText("20 Euro");
-			laundry = 20;
+		if(b.getExtras().getSmoking()){
+			cig = 20;
+			textArea_7.setText(cig+"");
 		}
 		else{
-			textArea_7.setText("-");
+			textArea_7.setText("");
 		}
 		add(textArea_7);
+		
+		textArea_7.addCaretListener(new CaretListener() {
+			
+			@Override
+			public void caretUpdate(CaretEvent e) {
+				if(!textArea_7.getText().isEmpty()){
+				cig = Integer.parseInt(textArea_7.getText());
+				total = roomdefault+service+cig+extrabed+laundry;
+				txtrPrice.setText(total+" Euro");
+				}
+			}
+		});
 		
 		JSeparator separator = new JSeparator();
 		separator.setBounds(330, 95, 35, 2);

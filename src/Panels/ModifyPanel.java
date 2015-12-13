@@ -12,6 +12,7 @@ import DataBase.BookingDB;
 import DataBase.RoomDB;
 import Model.Booking;
 import Model.Date;
+import Model.Extras;
 import Model.Guest;
 import Model.Room;
 
@@ -23,7 +24,9 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 import javax.swing.JFormattedTextField;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JList;
 import javax.swing.AbstractListModel;
@@ -49,6 +52,17 @@ public class ModifyPanel extends JPanel {
 	private JTextField BookingTo;
 	private JTextField BookingNumGuest;
 	private JTextField GuestBirth;
+	private JComboBox<Object> RoomNum;
+	
+	private Extras extras;
+	
+	private JCheckBox chckbxRoomService;
+	private JCheckBox chckbxLaundry;
+	private JCheckBox chckbxExtraBed;
+	private JCheckBox chckbxSmoking;
+	
+	private BookingDB bdb;
+	private RoomDB db;
 	
 	private DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
@@ -56,8 +70,12 @@ public class ModifyPanel extends JPanel {
 		setLayout(null);
 		setBounds(100, 100, 770, 300);
 		
+		bdb = new BookingDB();
+		db = new RoomDB();
 		
-		JLabel lblNewLabel = new JLabel("Modify booking");
+		extras = new Extras();
+		
+		JLabel lblNewLabel = new JLabel("Edit booking");
 		lblNewLabel.setFont(new Font("Arial", Font.BOLD, 16));
 		lblNewLabel.setBounds(0, 0, 120, 24);
 		add(lblNewLabel);
@@ -149,7 +167,7 @@ public class ModifyPanel extends JPanel {
 		add(lblNewLabel_1);
 		
 		
-		JComboBox<Object> RoomNum = new JComboBox<Object>();
+		RoomNum = new JComboBox<Object>();
 		RoomNum.setFont(new Font("Arial", Font.PLAIN, 14));
 		RoomNum.setModel(new DefaultComboBoxModel<Object>(new String[] {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25"}));
 		RoomNum.setBounds(340, 93, 98, 20);
@@ -161,27 +179,52 @@ public class ModifyPanel extends JPanel {
 		lblExtraServices.setBounds(468, 40, 105, 16);
 		add(lblExtraServices);
 		
-		JCheckBox chckbxRoomService = new JCheckBox("Room service");
+		chckbxRoomService = new JCheckBox("Room service");
 		chckbxRoomService.setFont(new Font("Arial", Font.PLAIN, 14));
 		chckbxRoomService.setBounds(468, 93, 111, 22);
+		chckbxRoomService.setSelected(b.getExtras().getRoomService());
 		add(chckbxRoomService);
 		
-		JCheckBox chckbxLaundry = new JCheckBox("Laundry");
+		chckbxLaundry = new JCheckBox("Laundry");
 		chckbxLaundry.setFont(new Font("Arial", Font.PLAIN, 14));
 		chckbxLaundry.setBounds(468, 138, 98, 22);
+		chckbxLaundry.setSelected(b.getExtras().getaundry());
 		add(chckbxLaundry);
 		
-		JCheckBox chckbxExtraBed = new JCheckBox("Extra bed");
+		chckbxExtraBed = new JCheckBox("Extra bed");
 		chckbxExtraBed.setFont(new Font("Arial", Font.PLAIN, 14));
 		chckbxExtraBed.setBounds(468, 183, 98, 22);
+		chckbxExtraBed.setSelected(b.getExtras().getExtraBed());
 		add(chckbxExtraBed);
 		
-		JCheckBox chckbxSmoking = new JCheckBox("Smoking");
+		chckbxSmoking = new JCheckBox("Smoking");
 		chckbxSmoking.setFont(new Font("Arial", Font.PLAIN, 14));
 		chckbxSmoking.setBounds(468, 229, 92, 22);
+		chckbxSmoking.setSelected(b.getExtras().getSmoking());
 		add(chckbxSmoking);
 		
 		JButton btnSaveChanges = new JButton("Save changes");
+		btnSaveChanges.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				b.getBookingGuest().setName(GuestName.getText());
+				b.getBookingGuest().setAddress(GuestAddress.getText());
+				b.getBookingGuest().setNationality(GuestNationality.getText());
+				b.setFrom(new Date(BookingFrom.getText()));
+				b.setTo(new Date(BookingTo.getText()));
+				b.setNumGuest(Integer.parseInt(BookingNumGuest.getText()));
+				b.getBookingGuest().setDateOfBirth(new Date(GuestBirth.getText()));
+				b.setRoom(db.getRoom((Integer.parseInt((String)RoomNum.getSelectedItem()))));
+				extras.setExtraBed(chckbxExtraBed.isSelected());
+				extras.setlaundry(chckbxLaundry.isSelected());
+				extras.setRoomService(chckbxRoomService.isSelected());
+				extras.setSmoking(chckbxSmoking.isSelected());
+				b.setExtras(extras);
+				bdb.setBooking(b);
+				bdb.serialize();
+				JFrame parent = new JFrame();
+				JOptionPane.showMessageDialog(parent, "Editing complete");
+			}
+		});
 		btnSaveChanges.setFont(new Font("Arial", Font.PLAIN, 14));
 		btnSaveChanges.setBounds(604, 93, 150, 20);
 		add(btnSaveChanges);

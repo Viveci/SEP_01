@@ -42,7 +42,7 @@ public class Booking implements Serializable{
 		this.room = room;
 		this.numGuest = numGuest;
 		period =this.from.diff(this.to);
-		this.extras = null;
+		this.extras = new Extras();
 		this.guests = new ArrayList<>();
 		this.guests.add(BookingGuest);
 	}
