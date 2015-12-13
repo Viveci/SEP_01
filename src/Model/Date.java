@@ -6,7 +6,10 @@ import java.io.Serializable;
  * Date class
  * <p>
  * This class is used to store all the dates in the project
- * uses Integer variables to store the day, month year separately.
+ * uses Integer variables to store the day, month and year separately.
+ * <p>The class can identify if the date is in a leapyear or not.
+ * <p>Esential setter and getters, toString, and equals methods are implemented.
+ * The toDays and the diff method are special.
  * */
 
 public class Date implements Serializable{
@@ -20,6 +23,7 @@ public class Date implements Serializable{
 	private int year;
 	private boolean isleap;
 	
+	//Used to calcualte the toDays method.
 	private int[] months;
 	
 	public Date(){
@@ -93,18 +97,18 @@ public class Date implements Serializable{
 	public int[] getmonths(){
 		return this.months;
 	}
-	//self-explanatory 
+	 
 	public String toString(){
 		return day+"/"+month+"/"+year;
 	}
 	
-	//Equals or not
 	public boolean equals(Date d){
 		return (this.day==d.getDay()&&this.month==d.getMonth()&&this.year==d.getYear());
 	}
 	
 	/**
-	 * @return Returns how many days passed in a year*/
+	 * @return Returns how many days passed from day one.
+	 * */
 	public int toDays(){
 		int sumyears = 0;
 		for(int o = 1; o < this.year; o++){
@@ -124,7 +128,7 @@ public class Date implements Serializable{
 	}
 	
 	/**
-	 * @return Returns the difference from the other date object in days*/
+	 * @return Returns the difference from the other date object.*/
 	public int diff(Date d){
 		return d.toDays()-this.toDays();
 	}

@@ -2,6 +2,11 @@ package Model;
 
 import java.io.Serializable;
 
+/**
+ * @author Teperics Márton
+ *	This class stores all the information of a Guest.
+ *	Uses Strings to save all information.
+ */
 public class Guest implements Serializable{
 	/**
 	 * 
@@ -15,8 +20,13 @@ public class Guest implements Serializable{
    private String email;
    private String passport;
    private String cell;
-   //private int BookingID;
    
+   /**
+ * @param name Name of the guest
+ * @param address Address of the Guest
+ * @param dateOfBirth The birth date of the guest
+ * @param nationality Nationality of the guest
+ */
    public Guest(String name, String address, Date dateOfBirth, String nationality){
       this.name = name;
       this.address = address;
@@ -27,7 +37,10 @@ public class Guest implements Serializable{
   	  cell = "UNSET";
    }
 
-   public Guest() {
+   /**
+ * Empty argument constructor. Used to create placeholders.
+ */
+	public Guest() {
 	name = "UNSET";
 	address = "UNSET";
 	nationality = "UNSET";
@@ -64,27 +77,21 @@ public class Guest implements Serializable{
 	public void setNationality(String nationality) {
 		this.nationality = nationality;
 	}
-
 	public String getEmail() {
 		return email;
 	}
-
 	public void setEmail(String email) {
 		this.email = email;
 	}
-
 	public String getPassport() {
 		return passport;
 	}
-
 	public void setPassport(String passport) {
 		this.passport = passport;
 	}
-
 	public String getCell() {
 		return cell;
 	}
-
 	public void setCell(String cell) {
 		this.cell = cell;
 	}

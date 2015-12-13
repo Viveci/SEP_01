@@ -4,37 +4,57 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
- * This class stores all the data for a booking
- * The user of the application fills up the variables with 
- * the Guest's data and then saves as a current state
+ * This class is the skeleton of the database. The program stores all the
+ * relevant information in connection with a specific booking in a booking object.
+ * Besides all the general setter and getter methods there are two constructor and one 
+ * toArray method. 
  * 
- * <p>Current state can be either modified or deleted by the program
+ * <p> The class is Serializable. 
  * */
+/**
+ * @author Teperics Márton
+ *
+ */
 public class Booking implements Serializable{
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	//Booked from ... to
+	
+	
+	//The two Date class stores the start and end date of the booking. 
 	private Date from;
 	private Date to;
+	
+	//This variable is calcualted from the two dates above. Shows how many days do the guest(s) spend there.
 	private int period;
 	
-	//Booked by...
+	//The booking guest. Used as one of the cullums on DataBasePanel
 	private Guest BookingGuest;
 	
-	//Number of guest in that room
+	//Number of guests arriving to the same room.
 	private int numGuest;
+	
+	//ArrayList of all the Guest objects beloning to this class. Indivudal recording is done on the CheckInPanel
 	private ArrayList<Guest> guests;
 	
-	//Booked the...
+	//Booked room.
 	private Room room;
 	
-	//Extras
+	//Required extras
 	private Extras extras;
 	
+	//ID, this variable is set by the BookingDB. Used as a key in the database, simillary to SQLite, but not SQLite
 	private int id;
 	
+	
+	/**
+	 * @param from The date of arrival
+	 * @param to The date of departure
+	 * @param bg The booking guest.
+	 * @param room The booked room.
+	 * @param numGuest How many guests will arrive
+	 */
 	public Booking(Date from, Date to, Guest bg, Room room, int numGuest){
 		this.from = from;
 		this.to = to;
@@ -46,6 +66,9 @@ public class Booking implements Serializable{
 		this.guests = new ArrayList<>();
 		this.guests.add(BookingGuest);
 	}
+	/**
+	 * Empty argument constructor. Only used to make placeholders
+	 */
 	public Booking(){
 		this.from = null;
 		this.to = null;
@@ -102,18 +125,18 @@ public class Booking implements Serializable{
 	public void setGuests(ArrayList<Guest> list){
 		this.guests = list;
 	} 
-	
-	
-	
-	public Object[] toArray(){
-		Object [] objectarr = {this.id,BookingGuest.getName(),"Room number " + room.getNumber(),room.toString(),from.toString(),to.toString()};
-		return  objectarr;
-	}
 	public Extras getExtras() {
 		return extras;
 	}
 	public void setExtras(Extras extras) {
 		this.extras = extras;
 	}
+	
+	//This method is used to send back an Object array to the DataBasePanel. These are the columns on the JTable
+	public Object[] toArray(){
+		Object [] objectarr = {this.id,BookingGuest.getName(),"Room number " + room.getNumber(),room.toString(),from.toString(),to.toString()};
+		return  objectarr;
+	}
+	
 	
 }

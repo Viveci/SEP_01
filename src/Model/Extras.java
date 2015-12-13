@@ -2,6 +2,12 @@ package Model;
 
 import java.io.Serializable;
 
+/**
+ * @author Teperics Márton
+ *	This class stores all the extras of one Booking.
+ *	It only uses Booleans. There is nothing special about this class. 
+ *	The most boring 
+ */
 public class Extras implements Serializable{
 
 	/**
