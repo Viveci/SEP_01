@@ -209,6 +209,13 @@ public class BookingDB implements Serializable{
 		this.serialize();
 	}
 
+	
+	
+	/**
+	 * @param name Name that is searched in Database
+	 * @param list Database
+	 * @return ArrayList with the found matches
+	 */
 	public ArrayList<Booking> filter(String name,ArrayList<Booking> list) {
 		ArrayList<Booking> list1 = new ArrayList<>();
 		for (int i = 0; i < list.size(); i++) {
@@ -218,6 +225,13 @@ public class BookingDB implements Serializable{
 		}
 		return list1;
 	}
+	
+	
+	/**
+	 * @param roomNumber Room number that is searched in the Database.
+	 * @param list Database	
+	 * @return ArrayList with the found matches
+	 */
 	public ArrayList<Booking> filter(int roomNumber, ArrayList<Booking> list) {
 		ArrayList<Booking> list1 = new ArrayList<>();
 		for (int i = 0; i < list.size(); i++) {
@@ -227,6 +241,13 @@ public class BookingDB implements Serializable{
 		}
 		return list1;
 	}
+	
+	
+	/**
+	 * @param date The searched from date
+	 * @param list Database
+	 * @return ArrayList with the found matches
+	 */
 	public ArrayList<Booking> filterf(Date date, ArrayList<Booking> list) {
 		ArrayList<Booking> list1 = new ArrayList<>();
 		for (int i = 0; i < list.size(); i++) {
@@ -236,6 +257,13 @@ public class BookingDB implements Serializable{
 		}
 		return list1;
 	}
+	
+	
+	/**
+	 * @param dateThe searched end date
+	 * @param list Database
+	 * @return ArrayList with the found matches
+	 */
 	public ArrayList<Booking> filtert(Date date, ArrayList<Booking> list) {
 		ArrayList<Booking> list1 = new ArrayList<>();
 		for (int i = 0; i < list.size(); i++) {
@@ -246,6 +274,11 @@ public class BookingDB implements Serializable{
 		return list1;
 	}
 	
+	
+	
+	/**
+	 * @param id The id of the booking which is to be deleted form the database
+	 */
 	public void deleteBooking(int id){
 		for (int i = 0; i < db.size(); i++) {
 			if(id==db.get(i).getId()){

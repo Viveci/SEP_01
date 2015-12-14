@@ -4,15 +4,29 @@ import java.util.ArrayList;
 
 import Model.Room;
 
+/**
+ * @author Teperics Márton
+ *<p> This class is a static database of all the rooms in the hotel. It is used to display the available rooms on the BookingPanel
+ *and it sends back dummy rooms when a booking is created. 
+ */
 public class RoomDB {
 	
+	//ArrayList of all the rooms in the hotel
 	private ArrayList<Room> allRoom;
 	
+	
+	/**
+	 * Creates and fills up the array list with all the rooms
+	 */
 	public RoomDB(){
 		allRoom = new ArrayList<>();
 		this.set();
 	}
 	
+	
+	/**
+	 * Sets up all the rooms in the hotel
+	 */
 	public void set(){
 		
 		//Suites setup
@@ -75,6 +89,7 @@ public class RoomDB {
 		
 	}
 
+	
 	/**
 	 * This method is used to filter the list of rooms to show 
 	 * which room is available on the given date.
@@ -139,6 +154,11 @@ public class RoomDB {
 		return filteredList;
 	}
 	
+	
+	/**
+	 * @param number The number of the searched room
+ 	 * @return Returns the room by the given number
+	 */
 	public Room getRoom(int number){
 		Room r = new Room();
 		for(int i = 0; i < allRoom.size(); i++){
@@ -149,6 +169,11 @@ public class RoomDB {
 		return r;
 	}
 	
+	
+	/**
+	 * @param list List of the rooms
+	 * @return	Returns Object[][] to fill up the JTable on the BookingPanel
+	 */
 	public Object[][] toData(ArrayList<Room> list){
 		Object[][] data = new Object[list.size()][4];
 		for(int i = 0; i< list.size();i++){
@@ -160,6 +185,9 @@ public class RoomDB {
 		return data;
 	}
 	
+	/**
+	 * @return Returns all the rooms without any filter
+	 */
 	public ArrayList<Room> getAllRoom(){
 		return allRoom;
 	}
