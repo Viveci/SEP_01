@@ -134,7 +134,8 @@ public class Booking implements Serializable{
 	
 	//This method is used to send back an Object array to the DataBasePanel. These are the columns on the JTable
 	public Object[] toArray(){
-		Object [] objectarr = {this.id,BookingGuest.getName(),"Room number " + room.getNumber(),room.toString(),from.toString(),to.toString()};
+		Object [] objectarr = {this.id,BookingGuest.getName(),"Room number " +
+								room.getNumber(),room.toString(),from.toString(),to.toString()};
 		return  objectarr;
 	}
 	

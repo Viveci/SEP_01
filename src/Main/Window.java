@@ -18,6 +18,8 @@ public class Window extends JFrame {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	private JPanel Booking;
+	private JPanel Database;
 	/**
 	 * Launch the application.
 	 */
@@ -44,8 +46,8 @@ public class Window extends JFrame {
 		setBounds(100, 100, 800, 485);
 		JTabbedPane tabbedPane = new JTabbedPane();
 		
-		JPanel Booking = new BookingPanell();
-		JPanel Database = new DataBasePanel();
+		Booking = new BookingPanell();
+		Database = new DataBasePanel();
 		
 		tabbedPane.add("Booking",Booking);		
 		tabbedPane.add("Database",Database);
